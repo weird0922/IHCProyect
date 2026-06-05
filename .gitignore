@@ -1,0 +1,21 @@
+# === Sistema Operativo ===
+# Evita que se suban archivos basura invisibles de Mac o Windows
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# === Entorno de Desarrollo ===
+# Ignora las configuraciones locales de Visual Studio y VS Code
+.vs/
+.vscode/
+.idea/
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+
+# === Archivos Temporales ===
+# Bloquea reportes de error y archivos de autoguardado
+*.log
+*.tmp
+*.bakc
