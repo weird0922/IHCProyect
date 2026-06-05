@@ -1,0 +1,170 @@
+/* ==========================================================================
+   1. VARIABLES Y DISEÑO INCLUSIVO (Accesibilidad y Contraste Alto)
+   ========================================================================== */
+:root {
+    --color-fondo: #f8fafc;
+    --color-tarjeta: #ffffff;
+    --color-texto-principal: #0f172a;
+    --color-texto-secundario: #475569;
+    --color-primario: #2563eb; /* Azul corporativo */
+    --color-primario-hover: #1d4ed8;
+    --color-borde: #e2e8f0;
+    --color-error: #dc2626;
+    --fuente-sistema: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* Base del sitio */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: var(--fuente-sistema);
+    background-color: var(--color-fondo);
+    color: var(--color-texto-principal);
+    line-height: 1.6;
+    padding: 2rem 1rem;
+}
+
+/* ==========================================================================
+   2. ESTRUCTURA Y CONTENEDORES (Orden y Espaciado)
+   ========================================================================== */
+header {
+    text-align: center;
+    margin-bottom: 3rem;
+}
+
+header h1 {
+    font-size: 2.2rem;
+    font-weight: 700;
+    color: var(--color-primario);
+    margin-bottom: 0.5rem;
+}
+
+header p {
+    color: var(--color-texto-secundario);
+    font-size: 1rem;
+}
+
+.container {
+    max-width: 800px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: 2rem; /* Separa las secciones de forma elegante */
+}
+
+/* Tarjetas minimalistas */
+.card {
+    background-color: var(--color-tarjeta);
+    border: 1px solid var(--color-borde);
+    border-radius: 12px;
+    padding: 2rem;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+}
+
+.card h2 {
+    font-size: 1.3rem;
+    font-weight: 600;
+    margin-bottom: 1.5rem;
+    border-bottom: 2px solid var(--color-fondo);
+    padding-bottom: 0.5rem;
+}
+
+/* ==========================================================================
+   3. ELEMENTOS DE FORMULARIO (Evita deformaciones)
+   ========================================================================== */
+.control-formulario {
+    margin-bottom: 1.25rem;
+}
+
+.control-formulario label {
+    display: block;
+    font-size: 0.9rem;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+    color: var(--color-texto-secundario);
+}
+
+.requerido {
+    color: var(--color-error);
+}
+
+/* Inputs, Selects y Textarea estilizados */
+input[type="text"],
+select,
+textarea {
+    width: 100%;
+    padding: 0.75rem;
+    border: 1px solid var(--color-borde);
+    border-radius: 6px;
+    font-family: inherit;
+    font-size: 1rem;
+    color: var(--color-texto-principal);
+    background-color: var(--color-tarjeta);
+    transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+input[type="text"]:focus,
+select:focus,
+textarea:focus {
+    outline: none;
+    border-color: var(--color-primario);
+    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.15);
+}
+
+/* 🎯 SOLUCIÓN: Evita que el usuario estire y deforme el textarea */
+textarea {
+    resize: none; /* Bloquea el redimensionamiento completo */
+}
+
+/* ==========================================================================
+   4. BOTONES Y TABLAS
+   ========================================================================== */
+.btn {
+    display: inline-block;
+    cursor: pointer;
+    padding: 0.75rem 1.5rem;
+    font-size: 1rem;
+    font-weight: 600;
+    border-radius: 6px;
+    border: none;
+    transition: background-color 0.2s;
+    width: 100%; /* Botón ancho completo para mejor clicabilidad */
+}
+
+.btn-primario {
+    background-color: var(--color-primario);
+    color: #ffffff;
+}
+
+.btn-primario:hover {
+    background-color: var(--color-primario-hover);
+}
+
+/* Tabla limpia */
+.tabla-contenedor {
+    overflow-x: auto;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    text-align: left;
+    font-size: 0.95rem;
+}
+
+th {
+    background-color: var(--color-fondo);
+    color: var(--color-texto-secundario);
+    font-weight: 600;
+    padding: 0.75rem;
+    border-bottom: 2px solid var(--color-borde);
+}
+
+td {
+    padding: 1rem 0.75rem;
+    border-bottom: 1px solid var(--color-borde);
+}

@@ -3,13 +3,83 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Prototipo IHC</title>
+    <title>Sistema de Gestión de Información - IHC</title>
+    <!-- Vinculación del CSS para los estilos inclusivos -->
     <link rel="stylesheet" href="css/styles.css">
 </head>
 <body>
 
-    <h1>IHC</h1>
+    <header>
+        <h1>Sistema de Gestión de Información</h1>
+        <p>Prototipo enfocado en accesibilidad y reducción de carga cognitiva</p>
+    </header>
 
+    <main class="container">
+        
+        <!-- SECCIÓN: MENSAJES Y ALERTAS (RF7) -->
+        <div id="contenedor-alertas" class="alerta oculto" aria-live="assertive"></div>
+
+        <!-- SECCIÓN: FORMULARIO DE REGISTRO (RF1, RF5) -->
+        <section class="card">
+            <h2>Registrar Información</h2>
+            <form id="formulario-registro" novalidate>
+                <div class="control-formulario">
+                    <label for="nombre-dato">Nombre del Registro <span class="requerido">*</span></label>
+                    <input type="text" id="nombre-dato" placeholder="Ej. Reporte de Campo 4" required>
+                </div>
+                
+                <div class="control-formulario">
+                    <label for="categoria-dato">Categoría <span class="requerido">*</span></label>
+                    <select id="categoria-dato" required>
+                        <option value="" disabled selected>Seleccione una opción</option>
+                        <option value="ingenieria">Ingeniería</option>
+                        <option value="diseno">Diseño UX/UI</option>
+                        <option value="negocio">Business Model</option>
+                    </select>
+                </div>
+
+                <div class="control-formulario">
+                    <label for="descripcion-dato">Descripción Corta</label>
+                    <textarea id="descripcion-dato" rows="3" placeholder="Detalles adicionales del registro"></textarea>
+                </div>
+
+                <button type="submit" id="btn-guardar" class="btn btn-primario">Guardar Registro</button>
+            </form>
+        </section>
+
+        <!-- SECCIÓN: BÚSQUEDA Y FILTRADO (RF8) -->
+        <section class="card">
+            <h2>Consulta Rápida</h2>
+            <div class="control-formulario">
+                <label for="buscar-registro">Buscar por nombre</label>
+                <input type="text" id="buscar-registro" placeholder="Escribe para buscar en tiempo real">
+            </div>
+        </section>
+
+        <!-- SECCIÓN: VISUALIZACIÓN DE DATOS (RF2, RF3, RF4) -->
+        <section class="card">
+            <h2>Registros Almacenados</h2>
+            <div class="tabla-contenedor">
+                <table id="tabla-registros">
+                    <thead>
+                        <tr>
+                            <th scope="col">ID</th>
+                            <th scope="col">Nombre</th>
+                            <th scope="col">Categoría</th>
+                            <th scope="col">Descripción</th>
+                            <th scope="col">Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody id="lista-datos">
+                        <!-- JavaScript insertará las filas dinámicamente aquí -->
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Vinculación de la lógica en JavaScript -->
     <script src="js/main.js"></script>
 </body>
 </html>
