@@ -3,83 +3,227 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sistema de Gestión de Información - IHC</title>
-    <!-- Vinculación del CSS para los estilos inclusivos -->
+    <title>Enterprise SaaS Portal - Globant AI & Metaverse Studios</title>
+    <!-- Iconos limpios para el diseño corporativo -->
+    <link rel="stylesheet" href="https://cloudflare.com">
     <link rel="stylesheet" href="css/styles.css">
 </head>
 <body>
 
-    <header>
-        <h1>Sistema de Gestión de Información</h1>
-        <p>Prototipo enfocado en accesibilidad y reducción de carga cognitiva</p>
-    </header>
-
-    <main class="container">
-        
-        <!-- SECCIÓN: MENSAJES Y ALERTAS (RF7) -->
-        <div id="contenedor-alertas" class="alerta oculto" aria-live="assertive"></div>
-
-        <!-- SECCIÓN: FORMULARIO DE REGISTRO (RF1, RF5) -->
-        <section class="card">
-            <h2>Registrar Información</h2>
-            <form id="formulario-registro" novalidate>
+    <!-- ==========================================================================
+       1. PANTALLA DE LOGIN / AUTENTICACIÓN (RF1, RF5, RNF3)
+       ========================================================================== -->
+    <div id="vista-login" class="modulo-login">
+        <div class="tarjeta-login">
+            <div class="login-header">
+                <h2>Globant <span>AI Studios</span></h2>
+                <p>Portal Corporativo de Gestión e Innovación</p>
+            </div>
+            
+            <form id="form-login" novalidate>
                 <div class="control-formulario">
-                    <label for="nombre-dato">Nombre del Registro <span class="requerido">*</span></label>
-                    <input type="text" id="nombre-dato" placeholder="Ej. Reporte de Campo 4" required>
+                    <label for="login-email">Correo Corporativo</label>
+                    <input type="email" id="login-email" placeholder="usuario@globant.com" required>
+                </div>
+                <div class="control-formulario">
+                    <label for="login-password">Contraseña</label>
+                    <input type="password" id="login-password" placeholder="••••••••" required>
                 </div>
                 
-                <div class="control-formulario">
-                    <label for="categoria-dato">Categoría <span class="requerido">*</span></label>
-                    <select id="categoria-dato" required>
-                        <option value="" disabled selected>Seleccione una opción</option>
-                        <option value="ingenieria">Ingeniería</option>
-                        <option value="diseno">Diseño UX/UI</option>
-                        <option value="negocio">Business Model</option>
-                    </select>
+                <button type="submit" class="btn btn-primario">Iniciar Sesión</button>
+                
+                <div class="login-separador"><span>O continuar con</span></div>
+                
+                <div class="oauth-botones">
+                    <button type="button" class="btn-oauth"><i class="fab fa-google"></i> Google</button>
+                    <button type="button" class="btn-oauth"><i class="fab fa-windows"></i> Microsoft</button>
                 </div>
-
-                <div class="control-formulario">
-                    <label for="descripcion-dato">Descripción Corta</label>
-                    <textarea id="descripcion-dato" rows="3" placeholder="Detalles adicionales del registro"></textarea>
-                </div>
-
-                <button type="submit" id="btn-guardar" class="btn btn-primario">Guardar Registro</button>
             </form>
-        </section>
+            <div id="alerta-login" class="alerta error oculto"></div>
+        </div>
+    </div>
 
-        <!-- SECCIÓN: BÚSQUEDA Y FILTRADO (RF8) -->
-        <section class="card">
-            <h2>Consulta Rápida</h2>
-            <div class="control-formulario">
-                <label for="buscar-registro">Buscar por nombre</label>
-                <input type="text" id="buscar-registro" placeholder="Escribe para buscar en tiempo real">
+    <!-- ==========================================================================
+       ESTRUCTURA PRINCIPAL DEL DASHBOARD (Oculta hasta el Login Exitoso)
+       ========================================================================== -->
+    <div id="app-dashboard" class="estructura-dashboard oculto">
+        
+        <!-- BARRA LATERAL FIJA (Navegación entre Módulos) -->
+        <aside class="sidebar">
+            <div class="sidebar-marca">
+                <h3>Globant <span>Portal</span></h3>
             </div>
-        </section>
-
-        <!-- SECCIÓN: VISUALIZACIÓN DE DATOS (RF2, RF3, RF4) -->
-        <section class="card">
-            <h2>Registros Almacenados</h2>
-            <div class="tabla-contenedor">
-                <table id="tabla-registros">
-                    <thead>
-                        <tr>
-                            <th scope="col">ID</th>
-                            <th scope="col">Nombre</th>
-                            <th scope="col">Categoría</th>
-                            <th scope="col">Descripción</th>
-                            <th scope="col">Acciones</th>
-                        </tr>
-                    </thead>
-                    <tbody id="lista-datos">
-                        <!-- JavaScript insertará las filas dinámicamente aquí -->
-                    </tbody>
-                </table>
+            <nav class="sidebar-menu">
+                <button class="nav-link activo" data-target="vista-dashboard"><i class="fas fa-chart-pie"></i> <span>Dashboard</span></button>
+                <button class="nav-link" data-target="vista-proyectos"><i class="fas fa-briefcase"></i> <span>Clientes & Proyectos</span></button>
+                <button class="nav-link" data-target="vista-ia"><i class="fas fa-brain"></i> <span>IA Services</span></button>
+                <button class="nav-link" data-target="vista-reportes"><i class="fas fa-chart-line"></i> <span>Reportes & KPIs</span></button>
+                <button class="nav-link" data-target="vista-pagos"><i class="fas fa-credit-card"></i> <span>Suscripciones</span></button>
+            </nav>
+            <div class="sidebar-usuario">
+                <div class="usuario-info">
+                    <p class="usuario-nombre">Operador Corporativo</p>
+                    <span class="usuario-rol"><i class="fas fa-shield-alt"></i> MFA Verificado</span>
+                </div>
+                <button id="btn-cerrar-sesion" class="btn-logout" aria-label="Cerrar Sesión"><i class="fas fa-sign-out-alt"></i></button>
             </div>
-        </section>
+        </aside>
 
-    </main>
+        <!-- CONTENEDOR CENTRAL DINÁMICO -->
+        <main class="contenido-principal">
+            <div id="contenedor-alertas-global" class="alerta oculto"></div>
 
-    <!-- Vinculación de la lógica en JavaScript -->
+            <!-- ==========================================================================
+               2. PANTALLA: DASHBOARD CORPORATIVO (RF2, RF4, RF6, RNF2)
+               ========================================================================== -->
+            <section id="vista-dashboard" class="seccion-modulo">
+                <div class="modulo-header">
+                    <div>
+                        <h2>Métricas Operacionales en Tiempo Real</h2>
+                        <p>Visualización global del rendimiento de modelos y equipos multidisciplinarios.</p>
+                    </div>
+                </div>
+                <div class="kpi-grid">
+                    <div class="kpi-card">
+                        <div class="kpi-icono azul"><i class="fas fa-folder-open"></i></div>
+                        <div class="kpi-datos"><h3>12</h3><p>Proyectos Activos</p></div>
+                    </div>
+                    <div class="kpi-card">
+                        <div class="kpi-icono verde"><i class="fas fa-bullseye"></i></div>
+                        <div class="kpi-datos"><h3>94.8%</h3><p>Precisión Promedio IA</p></div>
+                    </div>
+                    <div class="kpi-card">
+                        <div class="kpi-icono purpura"><i class="fas fa-users"></i></div>
+                        <div class="kpi-datos"><h3>8</h3><p>Pods Asignados</p></div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ==========================================================================
+               3. PANTALLA: GESTIÓN DE CLIENTES Y PROYECTOS (RF3, RF8, RNF9)
+               ========================================================================== -->
+            <section id="vista-proyectos" class="seccion-modulo oculto">
+                <div class="modulo-header">
+                    <div>
+                        <h2>Clientes & Proyectos</h2>
+                        <p>Vinculación corporativa de Pods y Studios especializados.</p>
+                    </div>
+                    <button class="btn btn-primario ancho-auto"><i class="fas fa-plus"></i> Crear Proyecto</button>
+                </div>
+                <div class="card filtros-barra">
+                    <div class="control-formulario" style="margin-bottom: 0;">
+                        <input type="text" id="buscar-proyecto" placeholder="Filtrar por industria, estado o cliente...">
+                    </div>
+                </div>
+                <div class="card tabla-contenedor">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Cliente</th>
+                                <th>Industria</th>
+                                <th>Proyecto</th>
+                                <th>Estado</th>
+                                <th>Pod Asignado</th>
+                                <th>Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>RetailCorp Perú</strong></td>
+                                <td>E-commerce</td>
+                                <td>Recomendador Predictivo v2</td>
+                                <td><span class="badge verde">En Producción</span></td>
+                                <td>Pod-AI-04 (Metaverse Studio)</td>
+                                <td>
+                                    <button class="btn-accion editar" aria-label="Editar"><i class="fas fa-edit"></i></button>
+                                    <button class="btn-accion eliminar" aria-label="Eliminar"><i class="fas fa-trash"></i></button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <!-- ==========================================================================
+               4. PANTALLA: MÓDULO DE IA SERVICES (RF2, RF6, RF9)
+               ========================================================================== -->
+            <section id="vista-ia" class="seccion-modulo oculto">
+                <div class="modulo-header">
+                    <div>
+                        <h2>Plataforma de Servicios de IA</h2>
+                        <p>Pruebas integradas de modelos NLP, Visión y Analítica Predictiva mediante APIs.</p>
+                    </div>
+                </div>
+                <div class="grid-ia">
+                    <div class="card">
+                        <h3>Prueba de Modelo de Lenguaje (NLP)</h3>
+                        <div class="control-formulario" style="margin-top: 1rem;">
+                            <label for="ia-input-prompt">Ingresar Prompt de Análisis corporativo</label>
+                            <textarea id="ia-input-prompt" rows="3" placeholder="Escribe el texto aquí para simular la inferencia de la API..."></textarea>
+                        </div>
+                        <button class="btn btn-primario">Ejecutar Inferencia API</button>
+                    </div>
+                    <div class="card">
+                        <h3>Entrenamiento Personalizado</h3>
+                        <p style="color: var(--color-texto-secundario); font-size: 0.9rem; margin-bottom: 1rem;">Carga de datasets de clientes para optimizar modelos.</p>
+                        <div class="zona-drop">
+                            <i class="fas fa-cloud-upload-alt"></i>
+                            <p>Arrastra tu archivo aquí (.csv, .json)</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ==========================================================================
+               5. PANTALLA: REPORTES Y MÉTRICAS (RF5, RF7, RNF4)
+               ========================================================================== -->
+<section id="vista-reportes" class="seccion-modulo oculto">
+                <div class="modulo-header">
+                    <div>
+                        <h2>Métricas de Rendimiento y Reportes</h2>
+                        <p>Exportación y evaluación de KPIs críticos del sistema corporativo.</p>
+                    </div>
+                    <button class="btn btn-secundario ancho-auto"><i class="fas fa-download"></i> Exportar a PDF</button>
+                </div>
+                <div class="grid-graficos">
+                    <div class="card contenedor-grafico-simulado">
+                        <h3>Precisión de Modelos por Industria</h3>
+                        <div class="barra-grafico-simulada"><span style="width: 95%;">95% Finanzas</span></div>
+                        <div class="barra-grafico-simulada"><span style="width: 88%;">88% Gaming</span></div>
+                        <div class="barra-grafico-simulada"><span style="width: 92%;">92% Salud</span></div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ==========================================================================
+               6. PANTALLA: GESTIÓN DE SUSCRIPCIONES Y PAGOS (RF10, RNF6)
+               ========================================================================== -->
+            <section id="vista-pagos" class="seccion-modulo oculto">
+                <div class="modulo-header">
+                    <div>
+                        <h2>Gestión de Suscripciones y Contratos</h2>
+                        <p>Control de planes globales integrados de forma segura con pasarelas de pago.</p>
+                    </div>
+                </div>
+                <div class="grid-planes">
+                    <div class="tarjeta-plan">
+                        <h4>Plan Premium</h4>
+                        <div class="precio">S/ 9,500<span>/mes</span></div>
+                        <p>Acceso a módulos especializados de NLP y analítica predictiva estándar.</p>
+                        <button class="btn btn-secundario">Plan Actual</button>
+                    </div>
+                    <div class="tarjeta-plan destacada">
+                        <h4>Plan Enterprise</h4>
+                        <div class="precio">S/ 55,000<span>/mes</span></div>
+                        <p>Soporte multirregión con clusters dedicados y entrenamiento ilimitado de modelos.</p>
+                        <button class="btn btn-primario">Gestionar con Stripe</button>
+                    </div>
+                </div>
+            </section>
+
+        </main>
+    </div>
+
     <script src="js/main.js"></script>
 </body>
 </html>
