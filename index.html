@@ -3,27 +3,27 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Enterprise SaaS Portal - Globant AI & Metaverse Studios</title>
-    <!-- Iconos limpios para el diseño corporativo -->
-    <link rel="stylesheet" href="https://cloudflare.com">
+    <title>GlobalTech - Plataforma de Gestión</title>
+    <!-- Font Awesome para íconos -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <link rel="stylesheet" href="css/styles.css">
 </head>
 <body>
 
     <!-- ==========================================================================
-       1. PANTALLA DE LOGIN / AUTENTICACIÓN (RF1, RF5, RNF3)
+       1. PANTALLA DE LOGIN
        ========================================================================== -->
     <div id="vista-login" class="modulo-login">
         <div class="tarjeta-login">
             <div class="login-header">
-                <h2>Globant <span>AI Studios</span></h2>
-                <p>Portal Corporativo de Gestión e Innovación</p>
+                <h2>GlobalTech</h2>
+                <p>Plataforma de Gestión de Proyectos e IA</p>
             </div>
             
             <form id="form-login" novalidate>
                 <div class="control-formulario">
-                    <label for="login-email">Correo Corporativo</label>
-                    <input type="email" id="login-email" placeholder="usuario@globant.com" required>
+                    <label for="login-email">Correo Electrónico</label>
+                    <input type="email" id="login-email" placeholder="correo@ejemplo.com" required>
                 </div>
                 <div class="control-formulario">
                     <label for="login-password">Contraseña</label>
@@ -32,11 +32,8 @@
                 
                 <button type="submit" class="btn btn-primario">Iniciar Sesión</button>
                 
-                <div class="login-separador"><span>O continuar con</span></div>
-                
-                <div class="oauth-botones">
-                    <button type="button" class="btn-oauth"><i class="fab fa-google"></i> Google</button>
-                    <button type="button" class="btn-oauth"><i class="fab fa-windows"></i> Microsoft</button>
+                <div class="login-footer">
+                    <p>¿No tienes cuenta? <button type="button" id="btn-ir-registro" class="btn-link">Registrarse</button></p>
                 </div>
             </form>
             <div id="alerta-login" class="alerta error oculto"></div>
@@ -44,26 +41,139 @@
     </div>
 
     <!-- ==========================================================================
-       ESTRUCTURA PRINCIPAL DEL DASHBOARD (Oculta hasta el Login Exitoso)
+       2. PANTALLA DE REGISTRO (Paso 1: Datos básicos)
+       ========================================================================== -->
+    <div id="vista-registro" class="modulo-login oculto">
+        <div class="tarjeta-login">
+            <div class="login-header">
+                <h2>Crear Cuenta</h2>
+                <p>Únete a GlobalTech hoy mismo</p>
+            </div>
+            
+            <form id="form-registro" novalidate>
+                <div class="control-formulario">
+                    <label for="reg-nombre">Nombre Completo</label>
+                    <input type="text" id="reg-nombre" placeholder="Tu nombre" required>
+                </div>
+                <div class="control-formulario">
+                    <label for="reg-email">Correo Electrónico</label>
+                    <input type="email" id="reg-email" placeholder="correo@ejemplo.com" required>
+                </div>
+                <div class="control-formulario">
+                    <label for="reg-password">Contraseña</label>
+                    <input type="password" id="reg-password" placeholder="••••••••" required>
+                </div>
+                <div class="control-formulario">
+                    <label for="reg-password2">Confirmar Contraseña</label>
+                    <input type="password" id="reg-password2" placeholder="••••••••" required>
+                </div>
+                
+                <button type="submit" class="btn btn-primario">Continuar</button>
+                
+                <div class="login-footer">
+                    <p>¿Ya tienes cuenta? <button type="button" id="btn-ir-login" class="btn-link">Iniciar Sesión</button></p>
+                </div>
+            </form>
+            <div id="alerta-registro" class="alerta error oculto"></div>
+        </div>
+    </div>
+
+    <!-- ==========================================================================
+       3. PANTALLA DE VERIFICACIÓN (Paso 2: Código MFA)
+       ========================================================================== -->
+    <div id="vista-verificacion" class="modulo-login oculto">
+        <div class="tarjeta-login">
+            <div class="login-header">
+                <h2>Verificar Correo</h2>
+                <p>Hemos enviado un código a <span id="email-verificacion"></span></p>
+            </div>
+            
+            <form id="form-verificacion" novalidate>
+                <div class="control-formulario">
+                    <label for="codigo-mfa">Código de Verificación (6 dígitos)</label>
+                    <input type="text" id="codigo-mfa" placeholder="000000" maxlength="6" required>
+                </div>
+                
+                <button type="submit" class="btn btn-primario">Verificar</button>
+                <button type="button" id="btn-reintentar-codigo" class="btn btn-secundario">Reenviar Código</button>
+            </form>
+            <div id="alerta-verificacion" class="alerta error oculto"></div>
+        </div>
+    </div>
+
+    <!-- ==========================================================================
+       4. PANTALLA DE SUSCRIPCIÓN (Paso 3: Elegir plan)
+       ========================================================================== -->
+    <div id="vista-suscripcion" class="modulo-login oculto">
+        <div class="tarjeta-suscripcion">
+            <div class="login-header">
+                <h2>Elige tu Plan</h2>
+                <p>Selecciona la suscripción que mejor se adapte a tus necesidades</p>
+            </div>
+            
+            <div class="grid-planes-suscripcion">
+                <div class="plan-card" data-plan="free">
+                    <div class="plan-header">
+                        <h3>Free</h3>
+                        <div class="plan-precio">$0<span>/mes</span></div>
+                    </div>
+                    <ul class="plan-caracteristicas">
+                        <li><i class="fas fa-check"></i> Acceso básico a IA</li>
+                        <li><i class="fas fa-check"></i> 5 proyectos</li>
+                        <li><i class="fas fa-check"></i> Reportes básicos</li>
+                    </ul>
+                    <button type="button" class="btn btn-secundario btn-elegir-plan">Elegir Plan</button>
+                </div>
+                <div class="plan-card destacado" data-plan="premium">
+                    <div class="plan-badge">Recomendado</div>
+                    <div class="plan-header">
+                        <h3>Premium</h3>
+                        <div class="plan-precio">$29<span>/mes</span></div>
+                    </div>
+                    <ul class="plan-caracteristicas">
+                        <li><i class="fas fa-check"></i> Acceso completo a IA</li>
+                        <li><i class="fas fa-check"></i> Proyectos ilimitados</li>
+                        <li><i class="fas fa-check"></i> Reportes avanzados</li>
+                        <li><i class="fas fa-check"></i> Exportar a PDF y Google Sheets</li>
+                    </ul>
+                    <button type="button" class="btn btn-primario btn-elegir-plan">Elegir Plan</button>
+                </div>
+                <div class="plan-card" data-plan="enterprise">
+                    <div class="plan-header">
+                        <h3>Enterprise</h3>
+                        <div class="plan-precio">$99<span>/mes</span></div>
+                    </div>
+                    <ul class="plan-caracteristicas">
+                        <li><i class="fas fa-check"></i> Todo en Premium</li>
+                        <li><i class="fas fa-check"></i> Soporte dedicado</li>
+                        <li><i class="fas fa-check"></i> API personalizada</li>
+                    </ul>
+                    <button type="button" class="btn btn-secundario btn-elegir-plan">Elegir Plan</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ==========================================================================
+       ESTRUCTURA PRINCIPAL DEL DASHBOARD
        ========================================================================== -->
     <div id="app-dashboard" class="estructura-dashboard oculto">
         
-        <!-- BARRA LATERAL FIJA (Navegación entre Módulos) -->
+        <!-- BARRA LATERAL FIJA -->
         <aside class="sidebar">
             <div class="sidebar-marca">
-                <h3>Globant <span>Portal</span></h3>
+                <h3>GlobalTech</h3>
             </div>
             <nav class="sidebar-menu">
-                <button class="nav-link activo" data-target="vista-dashboard"><i class="fas fa-chart-pie"></i> <span>Dashboard</span></button>
-                <button class="nav-link" data-target="vista-proyectos"><i class="fas fa-briefcase"></i> <span>Clientes & Proyectos</span></button>
-                <button class="nav-link" data-target="vista-ia"><i class="fas fa-brain"></i> <span>IA Services</span></button>
-                <button class="nav-link" data-target="vista-reportes"><i class="fas fa-chart-line"></i> <span>Reportes & KPIs</span></button>
-                <button class="nav-link" data-target="vista-pagos"><i class="fas fa-credit-card"></i> <span>Suscripciones</span></button>
+                <button class="nav-link activo" data-target="vista-dashboard"><i class="fas fa-robot"></i> <span>Gestión de IA</span></button>
+                <button class="nav-link" data-target="vista-proyectos"><i class="fas fa-project-diagram"></i> <span>Proyectos</span></button>
+                <button class="nav-link" data-target="vista-reportes"><i class="fas fa-chart-bar"></i> <span>Reporte</span></button>
+                <button class="nav-link" data-target="vista-pagos"><i class="fas fa-credit-card"></i> <span>Pagos</span></button>
             </nav>
             <div class="sidebar-usuario">
                 <div class="usuario-info">
-                    <p class="usuario-nombre">Operador Corporativo</p>
-                    <span class="usuario-rol"><i class="fas fa-shield-alt"></i> MFA Verificado</span>
+                    <p class="usuario-nombre" id="usuario-nombre-dashboard">Usuario</p>
+                    <span class="usuario-rol" id="usuario-plan-dashboard"><i class="fas fa-user"></i> Free</span>
                 </div>
                 <button id="btn-cerrar-sesion" class="btn-logout" aria-label="Cerrar Sesión"><i class="fas fa-sign-out-alt"></i></button>
             </div>
@@ -74,70 +184,148 @@
             <div id="contenedor-alertas-global" class="alerta oculto"></div>
 
             <!-- ==========================================================================
-               2. PANTALLA: DASHBOARD CORPORATIVO (RF2, RF4, RF6, RNF2)
+               1. GESTIÓN DE IA
                ========================================================================== -->
             <section id="vista-dashboard" class="seccion-modulo">
                 <div class="modulo-header">
                     <div>
-                        <h2>Métricas Operacionales en Tiempo Real</h2>
-                        <p>Visualización global del rendimiento de modelos y equipos multidisciplinarios.</p>
+                        <h2>Gestión de Servicios de IA</h2>
+                        <p>Utiliza nuestros modelos de inteligencia artificial para tus proyectos</p>
                     </div>
                 </div>
-                <div class="kpi-grid">
-                    <div class="kpi-card">
-                        <div class="kpi-icono azul"><i class="fas fa-folder-open"></i></div>
-                        <div class="kpi-datos"><h3>12</h3><p>Proyectos Activos</p></div>
+                <div class="grid-ia">
+                    <div class="card">
+                        <h3><i class="fas fa-comments"></i> Análisis de Texto</h3>
+                        <div class="control-formulario" style="margin-top: 1rem;">
+                            <label for="ia-input-prompt">Ingresa el texto para analizar</label>
+                            <textarea id="ia-input-prompt" rows="4" placeholder="Escribe aquí el texto que deseas analizar..."></textarea>
+                        </div>
+                        <button class="btn btn-primario btn-analizar-texto">Analizar Texto</button>
+                        <div id="resultado-ia" class="resultado-ia oculto" style="margin-top: 1rem; padding: 1rem; background: #f0fdf4; border-radius: 10px;">
+                            <p><strong>Resultado:</strong> Sentimiento positivo detectado</p>
+                        </div>
                     </div>
-                    <div class="kpi-card">
-                        <div class="kpi-icono verde"><i class="fas fa-bullseye"></i></div>
-                        <div class="kpi-datos"><h3>94.8%</h3><p>Precisión Promedio IA</p></div>
-                    </div>
-                    <div class="kpi-card">
-                        <div class="kpi-icono purpura"><i class="fas fa-users"></i></div>
-                        <div class="kpi-datos"><h3>8</h3><p>Pods Asignados</p></div>
+                    <div class="card">
+                        <h3><i class="fas fa-eye"></i> Visión Artificial</h3>
+                        <p style="color: var(--texto-secondary); font-size: 0.9rem; margin-bottom: 1rem;">Carga una imagen para detectar objetos y rostros</p>
+                        <div class="zona-drop">
+                            <i class="fas fa-cloud-upload-alt"></i>
+                            <p>Arrastra tu imagen aquí</p>
+                        </div>
+                        <button class="btn btn-secundario" style="margin-top: 1rem;">Cargar Imagen</button>
                     </div>
                 </div>
             </section>
 
             <!-- ==========================================================================
-               3. PANTALLA: GESTIÓN DE CLIENTES Y PROYECTOS (RF3, RF8, RNF9)
+               2. CLIENTES Y PROYECTOS
                ========================================================================== -->
             <section id="vista-proyectos" class="seccion-modulo oculto">
                 <div class="modulo-header">
                     <div>
-                        <h2>Clientes & Proyectos</h2>
-                        <p>Vinculación corporativa de Pods y Studios especializados.</p>
+                        <h2>Gestión de Proyectos y Clientes</h2>
+                        <p>Administra tus clientes y proyectos activos</p>
                     </div>
-                    <button class="btn btn-primario ancho-auto"><i class="fas fa-plus"></i> Crear Proyecto</button>
-                </div>
-                <div class="card filtros-barra">
-                    <div class="control-formulario" style="margin-bottom: 0;">
-                        <input type="text" id="buscar-proyecto" placeholder="Filtrar por industria, estado o cliente...">
+                    <div style="display: flex; gap: 0.75rem;">
+                        <button class="btn btn-secundario ancho-auto"><i class="fas fa-user-plus"></i> Nuevo Cliente</button>
+                        <button class="btn btn-primario ancho-auto"><i class="fas fa-folder-plus"></i> Nuevo Proyecto</button>
                     </div>
                 </div>
+
+                <!-- KPIs -->
+                <div class="kpi-grid" style="margin-bottom: 2rem;">
+                    <div class="kpi-card">
+                        <div class="kpi-icono azul"><i class="fas fa-folder-open"></i></div>
+                        <div class="kpi-datos"><h3>18</h3><p>Proyectos Activos</p></div>
+                    </div>
+                    <div class="kpi-card">
+                        <div class="kpi-icono verde"><i class="fas fa-users"></i></div>
+                        <div class="kpi-datos"><h3>42</h3><p>Clientes Activos</p></div>
+                    </div>
+                </div>
+
+                <!-- Clientes -->
                 <div class="card tabla-contenedor">
+                    <h3 style="margin-bottom: 1rem; font-size: 1.1rem;"><i class="fas fa-users"></i> Clientes</h3>
                     <table>
                         <thead>
                             <tr>
-                                <th>Cliente</th>
+                                <th></th>
+                                <th>Empresa</th>
                                 <th>Industria</th>
-                                <th>Proyecto</th>
-                                <th>Estado</th>
-                                <th>Pod Asignado</th>
-                                <th>Acciones</th>
+                                <th>País</th>
+                                <th>Contacto Principal</th>
                             </tr>
                         </thead>
                         <tbody>
                             <tr>
-                                <td><strong>RetailCorp Perú</strong></td>
-                                <td>E-commerce</td>
-                                <td>Recomendador Predictivo v2</td>
-                                <td><span class="badge verde">En Producción</span></td>
-                                <td>Pod-AI-04 (Metaverse Studio)</td>
-                                <td>
-                                    <button class="btn-accion editar" aria-label="Editar"><i class="fas fa-edit"></i></button>
-                                    <button class="btn-accion eliminar" aria-label="Eliminar"><i class="fas fa-trash"></i></button>
-                                </td>
+                                <td><div style="width: 32px; height: 32px; background: #3b82f6; border-radius: 8px; display: flex; align-items: center; justify-content: center; color: white; font-weight: bold;">T</div></td>
+                                <td><strong>TechCorp</strong></td>
+                                <td>Tecnología</td>
+                                <td><i class="fas fa-flag-usa"></i> USA</td>
+                                <td>Laura Gómez</td>
+                            </tr>
+                            <tr>
+                                <td><div style="width: 32px; height: 32px; background: #10b981; border-radius: 8px; display: flex; align-items: center; justify-content: center; color: white; font-weight: bold;">H</div></td>
+                                <td><strong>HealthPlus</strong></td>
+                                <td>Salud</td>
+                                <td><i class="fas fa-flag-uk"></i> UK</td>
+                                <td>David Smith</td>
+                            </tr>
+                            <tr>
+                                <td><div style="width: 32px; height: 32px; background: #84cc16; border-radius: 8px; display: flex; align-items: center; justify-content: center; color: white; font-weight: bold;">E</div></td>
+                                <td><strong>EcoLogistics</strong></td>
+                                <td>Logística</td>
+                                <td><i class="fas fa-flag"></i> Germany</td>
+                                <td>Monika Krause</td>
+                            </tr>
+                            <tr>
+                                <td><div style="width: 32px; height: 32px; background: #f59e0b; border-radius: 8px; display: flex; align-items: center; justify-content: center; color: white; font-weight: bold;">F</div></td>
+                                <td><strong>FinBank</strong></td>
+                                <td>Finanzas</td>
+                                <td><i class="fas fa-flag-br"></i> Brazil</td>
+                                <td>Carlos Duarte</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- Proyectos -->
+                <div class="card tabla-contenedor" style="margin-top: 1.5rem;">
+                    <h3 style="margin-bottom: 1rem; font-size: 1.1rem;"><i class="fas fa-project-diagram"></i> Proyectos</h3>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Proyecto</th>
+                                <th>Cliente</th>
+                                <th>Estado</th>
+                                <th>Pod Asignado</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>Metaverse UX Redesign</strong></td>
+                                <td>TechCorp</td>
+                                <td><span class="badge naranja">En Desarrollo</span></td>
+                                <td>AI Innovations Pod</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Chatbot Implementation</strong></td>
+                                <td>HealthPlus</td>
+                                <td><span class="badge verde">En Pruebas</span></td>
+                                <td>Digital Health Pod</td>
+                            </tr>
+                            <tr>
+                                <td><strong>IoT Smart Warehouse</strong></td>
+                                <td>EcoLogistics</td>
+                                <td><span class="badge azul">En Digen</span></td>
+                                <td>IoT Solutions Pod</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Data Analytics Platform</strong></td>
+                                <td>FinBank</td>
+                                <td><span class="badge amarillo">Finalizado</span></td>
+                                <td>Data Insights Pod</td>
                             </tr>
                         </tbody>
                     </table>
@@ -145,78 +333,195 @@
             </section>
 
             <!-- ==========================================================================
-               4. PANTALLA: MÓDULO DE IA SERVICES (RF2, RF6, RF9)
+               3. REPORTES
                ========================================================================== -->
-            <section id="vista-ia" class="seccion-modulo oculto">
+            <section id="vista-reportes" class="seccion-modulo oculto">
                 <div class="modulo-header">
                     <div>
-                        <h2>Plataforma de Servicios de IA</h2>
-                        <p>Pruebas integradas de modelos NLP, Visión y Analítica Predictiva mediante APIs.</p>
+                        <h2>Reportes y Métricas</h2>
+                        <p>Visualiza el rendimiento y exporta tus reportes</p>
+                    </div>
+                    <div style="display: flex; gap: 0.75rem;">
+                        <button class="btn btn-secundario ancho-auto btn-exportar-pdf"><i class="fas fa-file-pdf"></i> Exportar PDF</button>
+                        <button class="btn btn-secundario ancho-auto btn-exportar-sheets"><i class="fas fa-file-excel"></i> Google Sheets</button>
                     </div>
                 </div>
-                <div class="grid-ia">
-                    <div class="card">
-                        <h3>Prueba de Modelo de Lenguaje (NLP)</h3>
-                        <div class="control-formulario" style="margin-top: 1rem;">
-                            <label for="ia-input-prompt">Ingresar Prompt de Análisis corporativo</label>
-                            <textarea id="ia-input-prompt" rows="3" placeholder="Escribe el texto aquí para simular la inferencia de la API..."></textarea>
-                        </div>
-                        <button class="btn btn-primario">Ejecutar Inferencia API</button>
-                    </div>
-                    <div class="card">
-                        <h3>Entrenamiento Personalizado</h3>
-                        <p style="color: var(--color-texto-secundario); font-size: 0.9rem; margin-bottom: 1rem;">Carga de datasets de clientes para optimizar modelos.</p>
-                        <div class="zona-drop">
-                            <i class="fas fa-cloud-upload-alt"></i>
-                            <p>Arrastra tu archivo aquí (.csv, .json)</p>
-                        </div>
-                    </div>
-                </div>
-            </section>
 
-            <!-- ==========================================================================
-               5. PANTALLA: REPORTES Y MÉTRICAS (RF5, RF7, RNF4)
-               ========================================================================== -->
-<section id="vista-reportes" class="seccion-modulo oculto">
-                <div class="modulo-header">
-                    <div>
-                        <h2>Métricas de Rendimiento y Reportes</h2>
-                        <p>Exportación y evaluación de KPIs críticos del sistema corporativo.</p>
+                <!-- KPIs de reportes -->
+                <div class="kpi-grid" style="margin-bottom: 2rem;">
+                    <div class="kpi-card">
+                        <div class="kpi-datos"><h3>1,250</h3><p>Consultas Hoy</p></div>
                     </div>
-                    <button class="btn btn-secundario ancho-auto"><i class="fas fa-download"></i> Exportar a PDF</button>
+                    <div class="kpi-card">
+                        <div class="kpi-datos"><h3>54,800</h3><p>Consultas Mensuales</p></div>
+                    </div>
+                    <div class="kpi-card">
+                        <div class="kpi-datos"><h3>42</h3><p>Clientes Activos</p></div>
+                    </div>
                 </div>
+
                 <div class="grid-graficos">
-                    <div class="card contenedor-grafico-simulado">
-                        <h3>Precisión de Modelos por Industria</h3>
-                        <div class="barra-grafico-simulada"><span style="width: 95%;">95% Finanzas</span></div>
-                        <div class="barra-grafico-simulada"><span style="width: 88%;">88% Gaming</span></div>
-                        <div class="barra-grafico-simulada"><span style="width: 92%;">92% Salud</span></div>
+                    <!-- Mapa simulado -->
+                    <div class="card">
+                        <h3><i class="fas fa-globe"></i> Consultas por Ubicación</h3>
+                        <div style="height: 200px; background: linear-gradient(135deg, #1e3a5f 0%, #0d1b2a 100%); border-radius: 12px; margin-top: 1rem; display: flex; align-items: center; justify-content: center;">
+                            <i class="fas fa-globe-americas" style="font-size: 4rem; color: rgba(255,255,255,0.2);"></i>
+                        </div>
+                        <div style="display: flex; justify-content: space-around; margin-top: 1rem;">
+                            <div style="text-align: center;">
+                                <p style="font-weight: bold;">EE.UU.</p>
+                                <p style="font-size: 0.85rem; color: var(--texto-secondary);">21,400 Consultas</p>
+                            </div>
+                            <div style="text-align: center;">
+                                <p style="font-weight: bold;">Alemania</p>
+                                <p style="font-size: 0.85rem; color: var(--texto-secondary);">12,300 Consultas</p>
+                            </div>
+                            <div style="text-align: center;">
+                                <p style="font-weight: bold;">Brasil</p>
+                                <p style="font-size: 0.85rem; color: var(--texto-secondary);">8,900 Consultas</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Historial de consultas -->
+                    <div class="card">
+                        <h3><i class="fas fa-history"></i> Historial de Consultas</h3>
+                        <table style="margin-top: 1rem;">
+                            <thead>
+                                <tr>
+                                    <th>Fecha</th>
+                                    <th>Tipo</th>
+                                    <th>Resultado</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Hoy, 14:20</td>
+                                    <td>Análisis de Texto</td>
+                                    <td><span style="color: #10b981;"><i class="fas fa-check-circle"></i> Sentimiento Positivo</span></td>
+                                </tr>
+                                <tr>
+                                    <td>22 Jun, 11:30</td>
+                                    <td>Visión Artificial</td>
+                                    <td><span style="color: #3b82f6;"><i class="fas fa-check-circle"></i> 5 Objetos Detectados</span></td>
+                                </tr>
+                                <tr>
+                                    <td>20 Jun, 09:45</td>
+                                    <td>Predicción de Datos</td>
+                                    <td><span style="color: #f59e0b;"><i class="fas fa-chart-line"></i> Pronóstico: +18% Ventas</span></td>
+                                </tr>
+                            </tbody>
+                        </table>
                     </div>
                 </div>
             </section>
 
             <!-- ==========================================================================
-               6. PANTALLA: GESTIÓN DE SUSCRIPCIONES Y PAGOS (RF10, RNF6)
+               4. PAGOS / SUSCRIPCIONES
                ========================================================================== -->
             <section id="vista-pagos" class="seccion-modulo oculto">
                 <div class="modulo-header">
                     <div>
-                        <h2>Gestión de Suscripciones y Contratos</h2>
-                        <p>Control de planes globales integrados de forma segura con pasarelas de pago.</p>
+                        <h2>Gestión de Pagos y Suscripciones</h2>
+                        <p>Administra tu plan y visualiza los pagos</p>
                     </div>
                 </div>
-                <div class="grid-planes">
-                    <div class="tarjeta-plan">
-                        <h4>Plan Premium</h4>
-                        <div class="precio">S/ 9,500<span>/mes</span></div>
-                        <p>Acceso a módulos especializados de NLP y analítica predictiva estándar.</p>
-                        <button class="btn btn-secundario">Plan Actual</button>
+
+                <!-- Historial de pagos -->
+                <div class="card tabla-contenedor">
+                    <h3 style="margin-bottom: 1rem; font-size: 1.1rem;"><i class="fas fa-credit-card"></i> Pagos Recientes</h3>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Cliente</th>
+                                <th>Plan</th>
+                                <th>Monto</th>
+                                <th>Fecha</th>
+                                <th>Estado</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>HealthPlus</strong></td>
+                                <td>Premium</td>
+                                <td>$99.00</td>
+                                <td>05 Jul 2023</td>
+                                <td><span class="badge verde">Pagado</span></td>
+                            </tr>
+                            <tr>
+                                <td><strong>EcoLogistics</strong></td>
+                                <td>Enterprise</td>
+                                <td>$450.00</td>
+                                <td>28 Jun 2023</td>
+                                <td><span class="badge naranja">Pendiente</span></td>
+                            </tr>
+                            <tr>
+                                <td><strong>FinBank</strong></td>
+                                <td>Premium</td>
+                                <td>$99.00</td>
+                                <td>15 Jun 2023</td>
+                                <td><span class="badge verde">Pagado</span></td>
+                            </tr>
+                            <tr>
+                                <td><strong>SoftNet</strong></td>
+                                <td>Free</td>
+                                <td>$0.00</td>
+                                <td>10 Jun 2023</td>
+                                <td><span class="badge rojo">Fallido</span></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- Gráfico de ingresos -->
+                <div class="card" style="margin-top: 1.5rem; max-width: 500px;">
+                    <h3 style="margin-bottom: 1rem; font-size: 1.1rem;"><i class="fas fa-chart-line"></i> Ingresos Mensuales</h3>
+                    <div style="height: 180px; display: flex; align-items: flex-end; justify-content: space-around; padding: 1rem 0; border-bottom: 2px solid #374151;">
+                        <div style="width: 30px; background: linear-gradient(to top, #3b82f6, #60a5fa); height: 80px; border-radius: 4px 4px 0 0;"></div>
+                        <div style="width: 30px; background: linear-gradient(to top, #3b82f6, #60a5fa); height: 100px; border-radius: 4px 4px 0 0;"></div>
+                        <div style="width: 30px; background: linear-gradient(to top, #3b82f6, #60a5fa); height: 90px; border-radius: 4px 4px 0 0;"></div>
+                        <div style="width: 30px; background: linear-gradient(to top, #3b82f6, #60a5fa); height: 120px; border-radius: 4px 4px 0 0;"></div>
+                        <div style="width: 30px; background: linear-gradient(to top, #f59e0b, #fbbf24); height: 110px; border-radius: 4px 4px 0 0;"></div>
+                        <div style="width: 30px; background: linear-gradient(to top, #10b981, #34d399); height: 140px; border-radius: 4px 4px 0 0;"></div>
+                        <div style="width: 30px; background: linear-gradient(to top, #10b981, #34d399); height: 160px; border-radius: 4px 4px 0 0;"></div>
                     </div>
-                    <div class="tarjeta-plan destacada">
-                        <h4>Plan Enterprise</h4>
-                        <div class="precio">S/ 55,000<span>/mes</span></div>
-                        <p>Soporte multirregión con clusters dedicados y entrenamiento ilimitado de modelos.</p>
-                        <button class="btn btn-primario">Gestionar con Stripe</button>
+                </div>
+
+                <!-- KPIs de ingresos -->
+                <div class="kpi-grid" style="margin-top: 1.5rem;">
+                    <div class="kpi-card">
+                        <div class="kpi-icono verde"><i class="fas fa-hand-holding-usd"></i></div>
+                        <div class="kpi-datos"><h3>$128,750</h3><p>Ingresos Totales</p></div>
+                    </div>
+                    <div class="kpi-card">
+                        <div class="kpi-icono azul"><i class="fas fa-sync-alt"></i></div>
+                        <div class="kpi-datos"><h3>86%</h3><p>Tasa de Renovación</p></div>
+                    </div>
+                    <div class="kpi-card">
+                        <div class="kpi-icono purpura"><i class="fas fa-check-circle"></i></div>
+                        <div class="kpi-datos"><h3>94%</h3><p>Pagos Exitosos</p></div>
+                    </div>
+                </div>
+
+                <!-- Cambio de plan -->
+                <div class="card" style="margin-top: 1.5rem;">
+                    <h3 style="margin-bottom: 1rem; font-size: 1.1rem;"><i class="fas fa-exchange-alt"></i> Cambiar Plan</h3>
+                    <div class="grid-planes">
+                        <div class="plan-card" data-plan="free">
+                            <h4>Free</h4>
+                            <div class="plan-precio">$0<span>/mes</span></div>
+                            <button class="btn btn-secundario">Plan Actual</button>
+                        </div>
+                        <div class="plan-card destacado" data-plan="premium">
+                            <h4>Premium</h4>
+                            <div class="plan-precio">$29<span>/mes</span></div>
+                            <button class="btn btn-primario">Cambiar a Premium</button>
+                        </div>
+                        <div class="plan-card" data-plan="enterprise">
+                            <h4>Enterprise</h4>
+                            <div class="plan-precio">$99<span>/mes</span></div>
+                            <button class="btn btn-secundario">Cambiar a Enterprise</button>
+                        </div>
                     </div>
                 </div>
             </section>

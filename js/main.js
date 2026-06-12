@@ -1,143 +1,261 @@
 // ==========================================================================
-// 1. SELECTORES DE ELEMENTOS (Captura de la Interfaz)
+// VARIABLES GLOBALES
 // ==========================================================================
-const vistaLogin = document.getElementById('vista-login');
-const appDashboard = document.getElementById('app-dashboard');
-const formLogin = document.getElementById('form-login');
-const alertaLogin = document.getElementById('alerta-login');
-const btnCerrarSesion = document.getElementById('btn-cerrar-sesion');
-
-// Selectores para la navegación de pestañas (SPA)
-const enlacesNav = document.querySelectorAll('.nav-link');
-const seccionesModulos = document.querySelectorAll('.seccion-modulo');
-
-// Base de datos local simulada para usuarios registrados
 let usuariosRegistrados = JSON.parse(localStorage.getItem('usuarios_ihc')) || [];
-
-// Código MFA simulado en memoria
+let usuarioActual = JSON.parse(localStorage.getItem('usuario_actual')) || null;
+let tempUserData = {};
 let codigoMfaGenerado = null;
-let correoEnRegistro = null;
 
 // ==========================================================================
-// 2. LÓGICA DE INTERFACES INTERACTIVAS (Ruteo SPA sin recargar)
+// INICIALIZACIÓN
 // ==========================================================================
-enlacesNav.forEach(boton => {
-    boton.addEventListener('click', () => {
-        // Remover estado activo de todos los botones
-        enlacesNav.forEach(btn => btn.classList.remove('activo'));
-        // Agregar activo al botón presionado
-        boton.classList.add('activo');
-
-        // Ocultar todas las secciones del Dashboard
-        seccionesModulos.forEach(seccion => seccion.classList.add('oculto'));
-        
-        // Mostrar la sección destino basada en el atributo data-target
-        const targetId = boton.getAttribute('data-target');
-        document.getElementById(targetId).classList.remove('oculto');
-    });
+document.addEventListener('DOMContentLoaded', () => {
+    inicializarEventos();
+    if (usuarioActual) {
+        mostrarDashboard();
+    }
 });
 
 // ==========================================================================
-// 3. CONTROL DE AUTENTICACIÓN Y VALIDACIÓN (RF1, RF5, RNF3)
+// INICIALIZAR EVENTOS
 // ==========================================================================
-formLogin.addEventListener('submit', (e) => {
-    e.preventDefault(); // Evita que la página se refresque
+function inicializarEventos() {
+    // Login
+    document.getElementById('form-login').addEventListener('submit', manejarLogin);
+    document.getElementById('btn-ir-registro').addEventListener('click', () => cambiarVista('vista-registro'));
 
+    // Registro
+    document.getElementById('form-registro').addEventListener('submit', manejarRegistro);
+    document.getElementById('btn-ir-login').addEventListener('click', () => cambiarVista('vista-login'));
+
+    // Verificación MFA
+    document.getElementById('form-verificacion').addEventListener('submit', manejarVerificacion);
+    document.getElementById('btn-reintentar-codigo').addEventListener('click', reenviarCodigo);
+
+    // Suscripción
+    document.querySelectorAll('.btn-elegir-plan').forEach(btn => {
+        btn.addEventListener('click', (e) => manejarEleccionPlan(e.target.closest('.plan-card').dataset.plan));
+    });
+
+    // Navegación del Dashboard
+    document.querySelectorAll('.nav-link').forEach(btn => {
+        btn.addEventListener('click', manejarNavegacion);
+    });
+
+    // Cerrar sesión
+    document.getElementById('btn-cerrar-sesion').addEventListener('click', cerrarSesion);
+
+    // Exportar reportes
+    document.querySelector('.btn-exportar-pdf')?.addEventListener('click', exportarPDF);
+    document.querySelector('.btn-exportar-sheets')?.addEventListener('click', exportarGoogleSheets);
+
+    // Analizar texto IA
+    document.querySelector('.btn-analizar-texto')?.addEventListener('click', analizarTexto);
+}
+
+// ==========================================================================
+// FUNCIONES DE NAVEGACIÓN ENTRE VISTAS
+// ==========================================================================
+function cambiarVista(vistaId) {
+    document.querySelectorAll('.modulo-login').forEach(v => v.classList.add('oculto'));
+    document.getElementById(vistaId).classList.remove('oculto');
+}
+
+// ==========================================================================
+// FUNCIONES DE LOGIN
+// ==========================================================================
+function manejarLogin(e) {
+    e.preventDefault();
     const email = document.getElementById('login-email').value.trim();
     const password = document.getElementById('login-password').value;
+    const alerta = document.getElementById('alerta-login');
 
-    // Validación de campos obligatorios vacíos (RF5)
     if (!email || !password) {
-        mostrarErrorLogin('Por favor, rellene todos los campos obligatorios.');
+        mostrarAlerta(alerta, 'Por favor, rellena todos los campos.');
         return;
     }
 
-    // CONTROL DE ACCESO DIRECTO (Tu correo cualquiera + contraseña "admin")
+    // Acceso rápido con contraseña admin
     if (password === 'admin') {
-        ingresarAlDashboard();
+        usuarioActual = { nombre: 'Usuario Demo', email: email, plan: 'premium' };
+        localStorage.setItem('usuario_actual', JSON.stringify(usuarioActual));
+        mostrarDashboard();
         return;
     }
 
-    // CONTROL DE ACCESO PARA USUARIOS REGISTRADOS VÍA SIMULACIÓN OAUTH/MFA
-    const usuarioEncontrado = usuariosRegistrados.find(u => u.email === email && u.password === password);
-    if (usuarioEncontrado) {
-        ingresarAlDashboard();
+    // Verificar credenciales
+    const usuario = usuariosRegistrados.find(u => u.email === email && u.password === password);
+    if (usuario) {
+        usuarioActual = usuario;
+        localStorage.setItem('usuario_actual', JSON.stringify(usuarioActual));
+        mostrarDashboard();
     } else {
-        mostrarErrorLogin('Credenciales inválidas o contraseña incorrecta.');
+        mostrarAlerta(alerta, 'Credenciales inválidas. Verifica tu correo y contraseña.');
     }
-});
-
-// Función para manejar el ingreso exitoso
-function ingresarAlDashboard() {
-    alertaLogin.classList.add('oculto');
-    vistaLogin.classList.add('oculto');      // Oculta la pantalla de login
-    appDashboard.classList.remove('oculto'); // Muestra la estructura de la plataforma SaaS
-    formLogin.reset();
 }
 
-// Función para mostrar errores en el login con reducción de carga cognitiva
-function mostrarErrorLogin(mensaje) {
-    alertaLogin.textContent = mensaje;
-    alertaLogin.classList.remove('oculto');
+// ==========================================================================
+// FUNCIONES DE REGISTRO
+// ==========================================================================
+function manejarRegistro(e) {
+    e.preventDefault();
+    const nombre = document.getElementById('reg-nombre').value.trim();
+    const email = document.getElementById('reg-email').value.trim();
+    const password = document.getElementById('reg-password').value;
+    const password2 = document.getElementById('reg-password2').value;
+    const alerta = document.getElementById('alerta-registro');
+
+    if (!nombre || !email || !password || !password2) {
+        mostrarAlerta(alerta, 'Por favor, rellena todos los campos.');
+        return;
+    }
+
+    if (password !== password2) {
+        mostrarAlerta(alerta, 'Las contraseñas no coinciden.');
+        return;
+    }
+
+    if (password.length < 4) {
+        mostrarAlerta(alerta, 'La contraseña debe tener al menos 4 caracteres.');
+        return;
+    }
+
+    // Verificar que el correo no esté registrado
+    if (usuariosRegistrados.some(u => u.email === email)) {
+        mostrarAlerta(alerta, 'Este correo ya está registrado.');
+        return;
+    }
+
+    // Guardar datos temporales y enviar a verificación
+    tempUserData = { nombre, email, password };
+    generarYEnviarCodigo(email);
+    cambiarVista('vista-verificacion');
+    document.getElementById('email-verificacion').textContent = email;
 }
 
-// Cierre de sesión seguro
-btnCerrarSesion.addEventListener('click', () => {
-    appDashboard.classList.add('oculto');
-    vistaLogin.classList.remove('oculto');
-});
+// ==========================================================================
+// FUNCIONES DE VERIFICACIÓN MFA
+// ==========================================================================
+function generarYEnviarCodigo(email) {
+    codigoMfaGenerado = Math.floor(100000 + Math.random() * 900000).toString();
+    console.log(`[SIMULACIÓN] Código enviado a ${email}: ${codigoMfaGenerado}`);
+    alert(`Código de verificación: ${codigoMfaGenerado}`);
+}
+
+function reenviarCodigo() {
+    generarYEnviarCodigo(tempUserData.email);
+}
+
+function manejarVerificacion(e) {
+    e.preventDefault();
+    const codigoIngresado = document.getElementById('codigo-mfa').value.trim();
+    const alerta = document.getElementById('alerta-verificacion');
+
+    if (!codigoIngresado) {
+        mostrarAlerta(alerta, 'Por favor, ingresa el código de verificación.');
+        return;
+    }
+
+    if (codigoIngresado === codigoMfaGenerado) {
+        cambiarVista('vista-suscripcion');
+    } else {
+        mostrarAlerta(alerta, 'Código incorrecto. Por favor, inténtalo de nuevo.');
+    }
+}
 
 // ==========================================================================
-// 4. SIMULACIÓN CREATIVA DE REGISTRO MULTIFACTOR (OAuth Google / Microsoft)
+// FUNCIONES DE SUSCRIPCIÓN
 // ==========================================================================
-// Capturamos los botones de Google y Microsoft para disparar la experiencia guiada
-const botonesOAuth = document.querySelectorAll('.btn-oauth');
+function manejarEleccionPlan(plan) {
+    const nuevoUsuario = {
+        nombre: tempUserData.nombre,
+        email: tempUserData.email,
+        password: tempUserData.password,
+        plan: plan
+    };
 
-botonesOAuth.forEach(btn => {
-    btn.addEventListener('click', () => {
-        // Pedimos el correo electrónico del alumno/usuario
-        const correo = prompt("[Simulación OAuth] Ingrese su correo corporativo (ej: usuario@outlook.com o gmail.com):");
-        
-        if (!correo || !correo.includes('@')) {
-            alert("Correo electrónico no válido para la federación de identidades.");
-            return;
-        }
+    usuariosRegistrados.push(nuevoUsuario);
+    localStorage.setItem('usuarios_ihc', JSON.stringify(usuariosRegistrados));
+    usuarioActual = nuevoUsuario;
+    localStorage.setItem('usuario_actual', JSON.stringify(usuarioActual));
+    mostrarDashboard();
+}
 
-        correoEnRegistro = correo.trim();
-        // Generamos un número aleatorio de 6 dígitos simulando el token SMS/Email (MFA)
-        codigoMfaGenerado = Math.floor(100000 + Math.random() * 900000);
+// ==========================================================================
+// FUNCIONES DEL DASHBOARD
+// ==========================================================================
+function mostrarDashboard() {
+    document.querySelectorAll('.modulo-login').forEach(v => v.classList.add('oculto'));
+    document.getElementById('app-dashboard').classList.remove('oculto');
+    actualizarInfoUsuario();
+}
 
-        // Simulamos la llegada del mensaje informando el código en pantalla
-        alert(`[Simulador MFA Corporativo]\nSe ha enviado un token de seguridad a su bandeja de entrada corporativa.\n\nSu código de verificación es: ${codigoMfaGenerado}`);
+function actualizarInfoUsuario() {
+    if (usuarioActual) {
+        document.getElementById('usuario-nombre-dashboard').textContent = usuarioActual.nombre;
+        document.getElementById('usuario-plan-dashboard').innerHTML = `<i class="fas fa-user"></i> ${capitalizarPrimeraLetra(usuarioActual.plan)}`;
+    }
+}
 
-        // Solicitamos la verificación del token
-        const codigoIngresado = prompt("Ingrese el código de verificación de 6 dígitos recibido:");
+function capitalizarPrimeraLetra(str) {
+    return str.charAt(0).toUpperCase() + str.slice(1);
+}
 
-        if (parseInt(codigoIngresado) === codigoMfaGenerado) {
-            // Token correcto: Ahora creará su contraseña permanente
-            const nuevaPassword = prompt("¡Identidad Verificada con éxito!\nDefina su nueva contraseña corporativa para el portal:");
+function manejarNavegacion(e) {
+    const btn = e.currentTarget;
+    const targetId = btn.dataset.target;
 
-            if (!nuevaPassword || nuevaPassword.length < 4) {
-                alert("La contraseña debe tener al menos 4 caracteres por políticas de seguridad corporativas.");
-                return;
-            }
+    // Actualizar estado de los botones
+    document.querySelectorAll('.nav-link').forEach(b => b.classList.remove('activo'));
+    btn.classList.add('activo');
 
-            // Guardamos el nuevo usuario en el almacenamiento local
-            usuariosRegistrados.push({
-                email: correoEnRegistro,
-                password: nuevaPassword
-            });
-            localStorage.setItem('usuarios_ihc', JSON.stringify(usuariosRegistrados));
+    // Mostrar la sección correspondiente
+    document.querySelectorAll('.seccion-modulo').forEach(s => s.classList.add('oculto'));
+    document.getElementById(targetId).classList.remove('oculto');
+}
 
-            // Autocompletamos el formulario para mejorar la experiencia de usuario (HX)
-            document.getElementById('login-email').value = correoEnRegistro;
-            document.getElementById('login-password').value = nuevaPassword;
+function cerrarSesion() {
+    usuarioActual = null;
+    localStorage.removeItem('usuario_actual');
+    document.getElementById('app-dashboard').classList.add('oculto');
+    document.getElementById('form-login').reset();
+    cambiarVista('vista-login');
+}
 
-            alert("Registro completado en la base de datos local. Presione 'Iniciar Sesión' para acceder.");
-        } else {
-            alert("Código incorrecto. Autenticación multifactor rechazada.");
-            codigoMfaGenerado = null;
-            correoEnRegistro = null;
-        }
-    });
-});
+// ==========================================================================
+// FUNCIONES DE ALERTAS
+// ==========================================================================
+function mostrarAlerta(elemento, mensaje) {
+    elemento.textContent = mensaje;
+    elemento.classList.remove('oculto');
+    setTimeout(() => {
+        elemento.classList.add('oculto');
+    }, 4000);
+}
+
+// ==========================================================================
+// FUNCIONES DE EXPORTACIÓN
+// ==========================================================================
+function exportarPDF() {
+    alert('Exportando reporte a PDF... [SIMULACIÓN]');
+}
+
+function exportarGoogleSheets() {
+    alert('Exportando reporte a Google Sheets... [SIMULACIÓN]');
+}
+
+// ==========================================================================
+// FUNCIONES DE IA
+// ==========================================================================
+function analizarTexto() {
+    const texto = document.getElementById('ia-input-prompt').value.trim();
+    const resultado = document.getElementById('resultado-ia');
+
+    if (!texto) {
+        alert('Por favor, ingresa un texto para analizar.');
+        return;
+    }
+
+    resultado.classList.remove('oculto');
+    resultado.innerHTML = `<p><strong>Resultado del análisis:</strong> El texto tiene un tono ${Math.random() > 0.5 ? 'positivo' : 'neutral'}.</p>`;
+}
