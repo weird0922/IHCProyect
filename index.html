@@ -1,534 +1,5701 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>GlobalTech - Plataforma de Gestión</title>
-    <!-- Font Awesome para íconos -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-    <link rel="stylesheet" href="css/styles.css">
+
+    <title>GlobalTech | Cognitive Operations Platform</title>
+
+    <!-- Iconos -->
+    <link 
+        rel="stylesheet" 
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+    >
+
+    <!-- Estilos principales -->
+    <link rel="stylesheet" href="css/styles.css">  
+
 </head>
+
+
 <body>
+    <!-- ==============================
+         PANTALLA DE ACCESO GLOBALTECH
+         ============================== -->
 
-    <!-- ==========================================================================
-       1. PANTALLA DE LOGIN
-       ========================================================================== -->
-    <div id="vista-login" class="modulo-login">
-        <div class="tarjeta-login">
-            <div class="login-header">
-                <h2>GlobalTech</h2>
-                <p>Plataforma de Gestión de Proyectos e IA</p>
-            </div>
-            
-            <form id="form-login" novalidate>
-                <div class="control-formulario">
-                    <label for="login-email">Correo Electrónico</label>
-                    <input type="email" id="login-email" placeholder="correo@ejemplo.com" required>
-                </div>
-                <div class="control-formulario">
-                    <label for="login-password">Contraseña</label>
-                    <input type="password" id="login-password" placeholder="••••••••" required>
-                </div>
-                
-                <button type="submit" class="btn btn-primario">Iniciar Sesión</button>
-                
-                <div class="login-footer">
-                    <p>¿No tienes cuenta? <button type="button" id="btn-ir-registro" class="btn-link">Registrarse</button></p>
-                </div>
-            </form>
-            <div id="alerta-login" class="alerta error oculto"></div>
-        </div>
-    </div>
+    <section id="vista-acceso" class="pantalla-acceso">
 
-    <!-- ==========================================================================
-       2. PANTALLA DE REGISTRO (Paso 1: Datos básicos)
-       ========================================================================== -->
-    <div id="vista-registro" class="modulo-login oculto">
-        <div class="tarjeta-login">
-            <div class="login-header">
-                <h2>Crear Cuenta</h2>
-                <p>Únete a GlobalTech hoy mismo</p>
-            </div>
-            
-            <form id="form-registro" novalidate>
-                <div class="control-formulario">
-                    <label for="reg-nombre">Nombre Completo</label>
-                    <input type="text" id="reg-nombre" placeholder="Tu nombre" required>
-                </div>
-                <div class="control-formulario">
-                    <label for="reg-email">Correo Electrónico</label>
-                    <input type="email" id="reg-email" placeholder="correo@ejemplo.com" required>
-                </div>
-                <div class="control-formulario">
-                    <label for="reg-password">Contraseña</label>
-                    <input type="password" id="reg-password" placeholder="••••••••" required>
-                </div>
-                <div class="control-formulario">
-                    <label for="reg-password2">Confirmar Contraseña</label>
-                    <input type="password" id="reg-password2" placeholder="••••••••" required>
-                </div>
-                
-                <button type="submit" class="btn btn-primario">Continuar</button>
-                
-                <div class="login-footer">
-                    <p>¿Ya tienes cuenta? <button type="button" id="btn-ir-login" class="btn-link">Iniciar Sesión</button></p>
-                </div>
-            </form>
-            <div id="alerta-registro" class="alerta error oculto"></div>
-        </div>
-    </div>
 
-    <!-- ==========================================================================
-       3. PANTALLA DE VERIFICACIÓN (Paso 2: Código MFA)
-       ========================================================================== -->
-    <div id="vista-verificacion" class="modulo-login oculto">
-        <div class="tarjeta-login">
-            <div class="login-header">
-                <h2>Verificar Correo</h2>
-                <p>Hemos enviado un código a <span id="email-verificacion"></span></p>
-            </div>
-            
-            <form id="form-verificacion" novalidate>
-                <div class="control-formulario">
-                    <label for="codigo-mfa">Código de Verificación (6 dígitos)</label>
-                    <input type="text" id="codigo-mfa" placeholder="000000" maxlength="6" required>
-                </div>
-                
-                <button type="submit" class="btn btn-primario">Verificar</button>
-                <button type="button" id="btn-reintentar-codigo" class="btn btn-secundario">Reenviar Código</button>
-            </form>
-            <div id="alerta-verificacion" class="alerta error oculto"></div>
-        </div>
-    </div>
+        <!-- PANEL DE IDENTIDAD -->
+        <div class="panel-identidad">
 
-    <!-- ==========================================================================
-       4. PANTALLA DE SUSCRIPCIÓN (Paso 3: Elegir plan)
-       ========================================================================== -->
-    <div id="vista-suscripcion" class="modulo-login oculto">
-        <div class="tarjeta-suscripcion">
-            <div class="login-header">
-                <h2>Elige tu Plan</h2>
-                <p>Selecciona la suscripción que mejor se adapte a tus necesidades</p>
-            </div>
-            
-            <div class="grid-planes-suscripcion">
-                <div class="plan-card" data-plan="free">
-                    <div class="plan-header">
-                        <h3>Free</h3>
-                        <div class="plan-precio">$0<span>/mes</span></div>
-                    </div>
-                    <ul class="plan-caracteristicas">
-                        <li><i class="fas fa-check"></i> Acceso básico a IA</li>
-                        <li><i class="fas fa-check"></i> 5 proyectos</li>
-                        <li><i class="fas fa-check"></i> Reportes básicos</li>
-                    </ul>
-                    <button type="button" class="btn btn-secundario btn-elegir-plan">Elegir Plan</button>
+
+            <div class="marca-globaltech">
+                <div class="logo-globaltech">
+                    <span>GT</span>
                 </div>
-                <div class="plan-card destacado" data-plan="premium">
-                    <div class="plan-badge">Recomendado</div>
-                    <div class="plan-header">
-                        <h3>Premium</h3>
-                        <div class="plan-precio">$29<span>/mes</span></div>
-                    </div>
-                    <ul class="plan-caracteristicas">
-                        <li><i class="fas fa-check"></i> Acceso completo a IA</li>
-                        <li><i class="fas fa-check"></i> Proyectos ilimitados</li>
-                        <li><i class="fas fa-check"></i> Reportes avanzados</li>
-                        <li><i class="fas fa-check"></i> Exportar a PDF y Google Sheets</li>
-                    </ul>
-                    <button type="button" class="btn btn-primario btn-elegir-plan">Elegir Plan</button>
-                </div>
-                <div class="plan-card" data-plan="enterprise">
-                    <div class="plan-header">
-                        <h3>Enterprise</h3>
-                        <div class="plan-precio">$99<span>/mes</span></div>
-                    </div>
-                    <ul class="plan-caracteristicas">
-                        <li><i class="fas fa-check"></i> Todo en Premium</li>
-                        <li><i class="fas fa-check"></i> Soporte dedicado</li>
-                        <li><i class="fas fa-check"></i> API personalizada</li>
-                    </ul>
-                    <button type="button" class="btn btn-secundario btn-elegir-plan">Elegir Plan</button>
+
+                <div>
+                    <p
+                        class="eyebrow-globaltech"
+                        data-es="Plataforma empresarial impulsada por IA"
+                        data-en="AI-powered enterprise platform">
+                        Plataforma empresarial impulsada por IA
+                    </p>
+
+                    <h1>
+                        GlobalTech
+                    </h1>
+
+                    <span>
+                        Cognitive Operations Platform
+                    </span>
                 </div>
             </div>
-        </div>
-    </div>
 
-    <!-- ==========================================================================
-       ESTRUCTURA PRINCIPAL DEL DASHBOARD
-       ========================================================================== -->
-    <div id="app-dashboard" class="estructura-dashboard oculto">
-        
-        <!-- BARRA LATERAL FIJA -->
-        <aside class="sidebar">
-            <div class="sidebar-marca">
-                <h3>GlobalTech</h3>
-            </div>
-            <nav class="sidebar-menu">
-                <button class="nav-link activo" data-target="vista-dashboard"><i class="fas fa-robot"></i> <span>Gestión de IA</span></button>
-                <button class="nav-link" data-target="vista-proyectos"><i class="fas fa-project-diagram"></i> <span>Proyectos</span></button>
-                <button class="nav-link" data-target="vista-reportes"><i class="fas fa-chart-bar"></i> <span>Reporte</span></button>
-                <button class="nav-link" data-target="vista-pagos"><i class="fas fa-credit-card"></i> <span>Pagos</span></button>
-            </nav>
-            <div class="sidebar-usuario">
-                <div class="usuario-info">
-                    <p class="usuario-nombre" id="usuario-nombre-dashboard">Usuario</p>
-                    <span class="usuario-rol" id="usuario-plan-dashboard"><i class="fas fa-user"></i> Free</span>
-                </div>
-                <button id="btn-cerrar-sesion" class="btn-logout" aria-label="Cerrar Sesión"><i class="fas fa-sign-out-alt"></i></button>
-            </div>
-        </aside>
 
-        <!-- CONTENEDOR CENTRAL DINÁMICO -->
-        <main class="contenido-principal">
-            <div id="contenedor-alertas-global" class="alerta oculto"></div>
 
-            <!-- ==========================================================================
-               1. GESTIÓN DE IA
-               ========================================================================== -->
-            <section id="vista-dashboard" class="seccion-modulo">
-                <div class="modulo-header">
-                    <div>
-                        <h2>Gestión de Servicios de IA</h2>
-                        <p>Utiliza nuestros modelos de inteligencia artificial para tus proyectos</p>
-                    </div>
-                </div>
-                <div class="grid-ia">
-                    <div class="card">
-                        <h3><i class="fas fa-comments"></i> Análisis de Texto</h3>
-                        <div class="control-formulario" style="margin-top: 1rem;">
-                            <label for="ia-input-prompt">Ingresa el texto para analizar</label>
-                            <textarea id="ia-input-prompt" rows="4" placeholder="Escribe aquí el texto que deseas analizar..."></textarea>
-                        </div>
-                        <button class="btn btn-primario btn-analizar-texto">Analizar Texto</button>
-                        <div id="resultado-ia" class="resultado-ia oculto" style="margin-top: 1rem; padding: 1rem; background: #f0fdf4; border-radius: 10px;">
-                            <p><strong>Resultado:</strong> Sentimiento positivo detectado</p>
-                        </div>
-                    </div>
-                    <div class="card">
-                        <h3><i class="fas fa-eye"></i> Visión Artificial</h3>
-                        <p style="color: var(--texto-secondary); font-size: 0.9rem; margin-bottom: 1rem;">Carga una imagen para detectar objetos y rostros</p>
-                        <div class="zona-drop">
-                            <i class="fas fa-cloud-upload-alt"></i>
-                            <p>Arrastra tu imagen aquí</p>
-                        </div>
-                        <button class="btn btn-secundario" style="margin-top: 1rem;">Cargar Imagen</button>
-                    </div>
-                </div>
-            </section>
+            <div class="mensaje-plataforma">
+                <div class="encabezado-hero">
+                    <div class="copy-hero">
+                        <h2 
+                            data-es="Transformamos datos en decisiones inteligentes"
+                            data-en="We transform data into intelligent decisions">
 
-            <!-- ==========================================================================
-               2. CLIENTES Y PROYECTOS
-               ========================================================================== -->
-            <section id="vista-proyectos" class="seccion-modulo oculto">
-                <div class="modulo-header">
-                    <div>
-                        <h2>Gestión de Proyectos y Clientes</h2>
-                        <p>Administra tus clientes y proyectos activos</p>
-                    </div>
-                    <div style="display: flex; gap: 0.75rem;">
-                        <button class="btn btn-secundario ancho-auto"><i class="fas fa-user-plus"></i> Nuevo Cliente</button>
-                        <button class="btn btn-primario ancho-auto"><i class="fas fa-folder-plus"></i> Nuevo Proyecto</button>
-                    </div>
-                </div>
+                            Transformamos datos en decisiones inteligentes
 
-                <!-- KPIs -->
-                <div class="kpi-grid" style="margin-bottom: 2rem;">
-                    <div class="kpi-card">
-                        <div class="kpi-icono azul"><i class="fas fa-folder-open"></i></div>
-                        <div class="kpi-datos"><h3>18</h3><p>Proyectos Activos</p></div>
-                    </div>
-                    <div class="kpi-card">
-                        <div class="kpi-icono verde"><i class="fas fa-users"></i></div>
-                        <div class="kpi-datos"><h3>42</h3><p>Clientes Activos</p></div>
-                    </div>
-                </div>
+                        </h2>
 
-                <!-- Clientes -->
-                <div class="card tabla-contenedor">
-                    <h3 style="margin-bottom: 1rem; font-size: 1.1rem;"><i class="fas fa-users"></i> Clientes</h3>
-                    <table>
-                        <thead>
-                            <tr>
-                                <th></th>
-                                <th>Empresa</th>
-                                <th>Industria</th>
-                                <th>País</th>
-                                <th>Contacto Principal</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td><div style="width: 32px; height: 32px; background: #3b82f6; border-radius: 8px; display: flex; align-items: center; justify-content: center; color: white; font-weight: bold;">T</div></td>
-                                <td><strong>TechCorp</strong></td>
-                                <td>Tecnología</td>
-                                <td><i class="fas fa-flag-usa"></i> USA</td>
-                                <td>Laura Gómez</td>
-                            </tr>
-                            <tr>
-                                <td><div style="width: 32px; height: 32px; background: #10b981; border-radius: 8px; display: flex; align-items: center; justify-content: center; color: white; font-weight: bold;">H</div></td>
-                                <td><strong>HealthPlus</strong></td>
-                                <td>Salud</td>
-                                <td><i class="fas fa-flag-uk"></i> UK</td>
-                                <td>David Smith</td>
-                            </tr>
-                            <tr>
-                                <td><div style="width: 32px; height: 32px; background: #84cc16; border-radius: 8px; display: flex; align-items: center; justify-content: center; color: white; font-weight: bold;">E</div></td>
-                                <td><strong>EcoLogistics</strong></td>
-                                <td>Logística</td>
-                                <td><i class="fas fa-flag"></i> Germany</td>
-                                <td>Monika Krause</td>
-                            </tr>
-                            <tr>
-                                <td><div style="width: 32px; height: 32px; background: #f59e0b; border-radius: 8px; display: flex; align-items: center; justify-content: center; color: white; font-weight: bold;">F</div></td>
-                                <td><strong>FinBank</strong></td>
-                                <td>Finanzas</td>
-                                <td><i class="fas fa-flag-br"></i> Brazil</td>
-                                <td>Carlos Duarte</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
 
-                <!-- Proyectos -->
-                <div class="card tabla-contenedor" style="margin-top: 1.5rem;">
-                    <h3 style="margin-bottom: 1rem; font-size: 1.1rem;"><i class="fas fa-project-diagram"></i> Proyectos</h3>
-                    <table>
-                        <thead>
-                            <tr>
-                                <th>Proyecto</th>
-                                <th>Cliente</th>
-                                <th>Estado</th>
-                                <th>Pod Asignado</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td><strong>Metaverse UX Redesign</strong></td>
-                                <td>TechCorp</td>
-                                <td><span class="badge naranja">En Desarrollo</span></td>
-                                <td>AI Innovations Pod</td>
-                            </tr>
-                            <tr>
-                                <td><strong>Chatbot Implementation</strong></td>
-                                <td>HealthPlus</td>
-                                <td><span class="badge verde">En Pruebas</span></td>
-                                <td>Digital Health Pod</td>
-                            </tr>
-                            <tr>
-                                <td><strong>IoT Smart Warehouse</strong></td>
-                                <td>EcoLogistics</td>
-                                <td><span class="badge azul">En Digen</span></td>
-                                <td>IoT Solutions Pod</td>
-                            </tr>
-                            <tr>
-                                <td><strong>Data Analytics Platform</strong></td>
-                                <td>FinBank</td>
-                                <td><span class="badge amarillo">Finalizado</span></td>
-                                <td>Data Insights Pod</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-            </section>
+                        <p 
+                            data-es="Una plataforma empresarial para gestionar inteligencia artificial, proyectos digitales y equipos especializados."
+                            data-en="An enterprise platform for managing artificial intelligence, digital projects and specialized teams.">
 
-            <!-- ==========================================================================
-               3. REPORTES
-               ========================================================================== -->
-            <section id="vista-reportes" class="seccion-modulo oculto">
-                <div class="modulo-header">
-                    <div>
-                        <h2>Reportes y Métricas</h2>
-                        <p>Visualiza el rendimiento y exporta tus reportes</p>
-                    </div>
-                    <div style="display: flex; gap: 0.75rem;">
-                        <button class="btn btn-secundario ancho-auto btn-exportar-pdf"><i class="fas fa-file-pdf"></i> Exportar PDF</button>
-                        <button class="btn btn-secundario ancho-auto btn-exportar-sheets"><i class="fas fa-file-excel"></i> Google Sheets</button>
-                    </div>
-                </div>
+                            Una plataforma empresarial para gestionar inteligencia artificial,
+                            proyectos digitales y equipos especializados.
 
-                <!-- KPIs de reportes -->
-                <div class="kpi-grid" style="margin-bottom: 2rem;">
-                    <div class="kpi-card">
-                        <div class="kpi-datos"><h3>1,250</h3><p>Consultas Hoy</p></div>
+                        </p>
                     </div>
-                    <div class="kpi-card">
-                        <div class="kpi-datos"><h3>54,800</h3><p>Consultas Mensuales</p></div>
-                    </div>
-                    <div class="kpi-card">
-                        <div class="kpi-datos"><h3>42</h3><p>Clientes Activos</p></div>
-                    </div>
-                </div>
 
-                <div class="grid-graficos">
-                    <!-- Mapa simulado -->
-                    <div class="card">
-                        <h3><i class="fas fa-globe"></i> Consultas por Ubicación</h3>
-                        <div style="height: 200px; background: linear-gradient(135deg, #1e3a5f 0%, #0d1b2a 100%); border-radius: 12px; margin-top: 1rem; display: flex; align-items: center; justify-content: center;">
-                            <i class="fas fa-globe-americas" style="font-size: 4rem; color: rgba(255,255,255,0.2);"></i>
-                        </div>
-                        <div style="display: flex; justify-content: space-around; margin-top: 1rem;">
-                            <div style="text-align: center;">
-                                <p style="font-weight: bold;">EE.UU.</p>
-                                <p style="font-size: 0.85rem; color: var(--texto-secondary);">21,400 Consultas</p>
-                            </div>
-                            <div style="text-align: center;">
-                                <p style="font-weight: bold;">Alemania</p>
-                                <p style="font-size: 0.85rem; color: var(--texto-secondary);">12,300 Consultas</p>
-                            </div>
-                            <div style="text-align: center;">
-                                <p style="font-weight: bold;">Brasil</p>
-                                <p style="font-size: 0.85rem; color: var(--texto-secondary);">8,900 Consultas</p>
+                    <div class="visual-inteligencia hero-cerebro">
+                        <div
+                            class="nucleo-ia"
+                            id="disparador-login-cerebro"
+                            role="button"
+                            tabindex="0"
+                            aria-label="Abrir acceso inteligente">
+
+                            <div class="onda-ia"></div>
+
+
+                            <div class="centro-ia">
+
+                                <i class="fas fa-brain"></i>
+
                             </div>
                         </div>
-                    </div>
 
-                    <!-- Historial de consultas -->
-                    <div class="card">
-                        <h3><i class="fas fa-history"></i> Historial de Consultas</h3>
-                        <table style="margin-top: 1rem;">
-                            <thead>
-                                <tr>
-                                    <th>Fecha</th>
-                                    <th>Tipo</th>
-                                    <th>Resultado</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>Hoy, 14:20</td>
-                                    <td>Análisis de Texto</td>
-                                    <td><span style="color: #10b981;"><i class="fas fa-check-circle"></i> Sentimiento Positivo</span></td>
-                                </tr>
-                                <tr>
-                                    <td>22 Jun, 11:30</td>
-                                    <td>Visión Artificial</td>
-                                    <td><span style="color: #3b82f6;"><i class="fas fa-check-circle"></i> 5 Objetos Detectados</span></td>
-                                </tr>
-                                <tr>
-                                    <td>20 Jun, 09:45</td>
-                                    <td>Predicción de Datos</td>
-                                    <td><span style="color: #f59e0b;"><i class="fas fa-chart-line"></i> Pronóstico: +18% Ventas</span></td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            </section>
+                        <div class="estado-ia">
+                            <span></span>
 
-            <!-- ==========================================================================
-               4. PAGOS / SUSCRIPCIONES
-               ========================================================================== -->
-            <section id="vista-pagos" class="seccion-modulo oculto">
-                <div class="modulo-header">
-                    <div>
-                        <h2>Gestión de Pagos y Suscripciones</h2>
-                        <p>Administra tu plan y visualiza los pagos</p>
-                    </div>
-                </div>
-
-                <!-- Historial de pagos -->
-                <div class="card tabla-contenedor">
-                    <h3 style="margin-bottom: 1rem; font-size: 1.1rem;"><i class="fas fa-credit-card"></i> Pagos Recientes</h3>
-                    <table>
-                        <thead>
-                            <tr>
-                                <th>Cliente</th>
-                                <th>Plan</th>
-                                <th>Monto</th>
-                                <th>Fecha</th>
-                                <th>Estado</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td><strong>HealthPlus</strong></td>
-                                <td>Premium</td>
-                                <td>$99.00</td>
-                                <td>05 Jul 2023</td>
-                                <td><span class="badge verde">Pagado</span></td>
-                            </tr>
-                            <tr>
-                                <td><strong>EcoLogistics</strong></td>
-                                <td>Enterprise</td>
-                                <td>$450.00</td>
-                                <td>28 Jun 2023</td>
-                                <td><span class="badge naranja">Pendiente</span></td>
-                            </tr>
-                            <tr>
-                                <td><strong>FinBank</strong></td>
-                                <td>Premium</td>
-                                <td>$99.00</td>
-                                <td>15 Jun 2023</td>
-                                <td><span class="badge verde">Pagado</span></td>
-                            </tr>
-                            <tr>
-                                <td><strong>SoftNet</strong></td>
-                                <td>Free</td>
-                                <td>$0.00</td>
-                                <td>10 Jun 2023</td>
-                                <td><span class="badge rojo">Fallido</span></td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-
-                <!-- Gráfico de ingresos -->
-                <div class="card" style="margin-top: 1.5rem; max-width: 500px;">
-                    <h3 style="margin-bottom: 1rem; font-size: 1.1rem;"><i class="fas fa-chart-line"></i> Ingresos Mensuales</h3>
-                    <div style="height: 180px; display: flex; align-items: flex-end; justify-content: space-around; padding: 1rem 0; border-bottom: 2px solid #374151;">
-                        <div style="width: 30px; background: linear-gradient(to top, #3b82f6, #60a5fa); height: 80px; border-radius: 4px 4px 0 0;"></div>
-                        <div style="width: 30px; background: linear-gradient(to top, #3b82f6, #60a5fa); height: 100px; border-radius: 4px 4px 0 0;"></div>
-                        <div style="width: 30px; background: linear-gradient(to top, #3b82f6, #60a5fa); height: 90px; border-radius: 4px 4px 0 0;"></div>
-                        <div style="width: 30px; background: linear-gradient(to top, #3b82f6, #60a5fa); height: 120px; border-radius: 4px 4px 0 0;"></div>
-                        <div style="width: 30px; background: linear-gradient(to top, #f59e0b, #fbbf24); height: 110px; border-radius: 4px 4px 0 0;"></div>
-                        <div style="width: 30px; background: linear-gradient(to top, #10b981, #34d399); height: 140px; border-radius: 4px 4px 0 0;"></div>
-                        <div style="width: 30px; background: linear-gradient(to top, #10b981, #34d399); height: 160px; border-radius: 4px 4px 0 0;"></div>
-                    </div>
-                </div>
-
-                <!-- KPIs de ingresos -->
-                <div class="kpi-grid" style="margin-top: 1.5rem;">
-                    <div class="kpi-card">
-                        <div class="kpi-icono verde"><i class="fas fa-hand-holding-usd"></i></div>
-                        <div class="kpi-datos"><h3>$128,750</h3><p>Ingresos Totales</p></div>
-                    </div>
-                    <div class="kpi-card">
-                        <div class="kpi-icono azul"><i class="fas fa-sync-alt"></i></div>
-                        <div class="kpi-datos"><h3>86%</h3><p>Tasa de Renovación</p></div>
-                    </div>
-                    <div class="kpi-card">
-                        <div class="kpi-icono purpura"><i class="fas fa-check-circle"></i></div>
-                        <div class="kpi-datos"><h3>94%</h3><p>Pagos Exitosos</p></div>
-                    </div>
-                </div>
-
-                <!-- Cambio de plan -->
-                <div class="card" style="margin-top: 1.5rem;">
-                    <h3 style="margin-bottom: 1rem; font-size: 1.1rem;"><i class="fas fa-exchange-alt"></i> Cambiar Plan</h3>
-                    <div class="grid-planes">
-                        <div class="plan-card" data-plan="free">
-                            <h4>Free</h4>
-                            <div class="plan-precio">$0<span>/mes</span></div>
-                            <button class="btn btn-secundario">Plan Actual</button>
-                        </div>
-                        <div class="plan-card destacado" data-plan="premium">
-                            <h4>Premium</h4>
-                            <div class="plan-precio">$29<span>/mes</span></div>
-                            <button class="btn btn-primario">Cambiar a Premium</button>
-                        </div>
-                        <div class="plan-card" data-plan="enterprise">
-                            <h4>Enterprise</h4>
-                            <div class="plan-precio">$99<span>/mes</span></div>
-                            <button class="btn btn-secundario">Cambiar a Enterprise</button>
+                            <strong
+                                data-es="Pulsa para iniciar sesión"
+                                data-en="Tap to sign in">
+                                Pulsa para iniciar sesión
+                            </strong>
                         </div>
                     </div>
                 </div>
-            </section>
+            </div>
 
-        </main>
+
+
+
+            <!-- Indicadores iniciales -->
+
+            <div class="indicadores-globales">
+
+
+                <div class="indicador">
+
+                    <strong>
+                        +30
+                    </strong>
+
+                    <span
+                        data-es="Mercados conectados"
+                        data-en="Connected markets">
+
+                        Mercados conectados
+
+                    </span>
+
+                </div>
+                <div class="indicador">
+
+                    <strong>
+                        98.6%
+                    </strong>
+
+                    <span
+                        data-es="Precisión IA"
+                        data-en="AI accuracy">
+
+                        Precisión IA
+
+                    </span>
+
+                </div>
+                <div class="indicador">
+
+                    <strong>
+                        24/7
+                    </strong>
+
+                    <span
+                        data-es="Monitoreo inteligente"
+                        data-en="Smart monitoring">
+
+                        Monitoreo inteligente
+                    </span>
+                </div>
+            </div>
+
+        <!-- PANEL LOGIN -->
+
+        <div class="panel-autenticacion">
+            <div class="selector-idioma">
+                <button 
+                    class="idioma-activo"
+                    data-language="es">
+
+                    Español
+
+                </button>
+                <button 
+                    data-language="en">
+
+                    English
+
+                </button>
+            </div>
+
+            <div
+                class="panel-login-flotante"
+                id="panel-login-flotante"
+                aria-hidden="true">
+                <div class="panel-login-contenido">
+                    <button
+                        type="button"
+                        class="cerrar-panel-login"
+                        id="cerrar-login-panel"
+                        aria-label="Cerrar panel de acceso">
+                        <i class="fa-solid fa-xmark"></i>
+                    </button>
+
+                    <div class="tarjeta-login">
+                        <header class="login-header">
+                            <h2
+                                data-es="Bienvenido nuevamente"
+                                data-en="Welcome back">
+
+                                Bienvenido nuevamente
+
+                            </h2>
+
+
+                            <p
+                                data-es="Ingresa para acceder al ecosistema GlobalTech"
+                                data-en="Sign in to access the GlobalTech ecosystem">
+
+                                Ingresa para acceder al ecosistema GlobalTech
+
+                            </p>
+
+
+                        </header>
+
+
+
+
+
+                        <form id="form-login">
+
+
+                            <div class="campo-formulario">
+
+
+                                <label for="login-email"
+                                    data-es="Correo electrónico"
+                                    data-en="Email">
+
+                                    Correo electrónico
+
+                                </label>
+
+
+                                <input 
+                                    type="email"
+                                    id="login-email"
+                                    placeholder="correo@empresa.com"
+                                    data-placeholder-es="correo@empresa.com"
+                                    data-placeholder-en="email@company.com"
+                                    autocomplete="email"
+                                    required>
+
+
+                            </div>
+
+
+
+
+                            <div class="campo-formulario">
+
+
+                                <label for="login-password"
+                                    data-es="Contraseña"
+                                    data-en="Password">
+
+                                    Contraseña
+
+                                </label>
+
+
+                                <input 
+                                    type="password"
+                                    id="login-password"
+                                    placeholder="••••••••"
+                                    data-placeholder-es="••••••••"
+                                    data-placeholder-en="••••••••"
+                                    autocomplete="current-password"
+                                    required>
+
+
+                            </div>
+
+
+
+
+
+                            <button 
+                                type="submit"
+                                class="btn-acceso"
+                                data-es="Ingresar al sistema"
+                                data-en="Access platform">
+
+                                Ingresar al sistema
+
+                            </button>
+
+
+
+                        </form>
+
+
+
+
+
+                        <div class="login-registro">
+
+
+                            <span
+                                data-es="¿No tienes una cuenta?"
+                                data-en="Don't have an account?">
+
+                                ¿No tienes una cuenta?
+
+                            </span>
+                            <button 
+                                type="button"
+                                id="btn-registro">
+
+                                Registrarse
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+<!-- =========================================
+     REGISTRO DE USUARIO
+     ========================================= -->
+
+<section id="vista-registro" class="pantalla-secundaria oculto">
+
+
+    <div class="tarjeta-proceso">
+
+
+        <header class="encabezado-proceso">
+
+            <h2
+                data-es="Crear cuenta empresarial"
+                data-en="Create business account">
+
+                Crear cuenta empresarial
+
+            </h2>
+
+
+            <p
+                data-es="Forma parte del ecosistema GlobalTech"
+                data-en="Join the GlobalTech ecosystem">
+
+                Forma parte del ecosistema GlobalTech
+
+            </p>
+
+
+        </header>
+
+
+
+
+
+        <form id="form-registro">
+
+
+            <div class="campo-formulario">
+
+
+                <label for="registro-nombre"
+                    data-es="Nombre completo"
+                    data-en="Full name">
+
+                    Nombre completo
+
+                </label>
+
+
+                <input 
+                    type="text"
+                    id="registro-nombre"
+                    placeholder="Nombre y apellido"
+                    required>
+
+
+            </div>
+
+
+
+
+
+            <div class="campo-formulario">
+
+
+                <label for="registro-email"
+                    data-es="Correo corporativo"
+                    data-en="Business email">
+
+                    Correo corporativo
+
+                </label>
+
+
+                <input
+                    type="email"
+                    id="registro-email"
+                    placeholder="usuario@empresa.com"
+                    required>
+
+
+            </div>
+
+
+
+
+
+            <div class="campo-formulario">
+
+
+                <label for="registro-password"
+                    data-es="Contraseña"
+                    data-en="Password">
+
+                    Contraseña
+
+                </label>
+
+
+                <input
+                    type="password"
+                    id="registro-password"
+                    placeholder="••••••••"
+                    required>
+
+
+            </div>
+
+
+
+
+            <div class="campo-formulario">
+
+
+                <label for="registro-password-confirmar"
+                    data-es="Confirmar contraseña"
+                    data-en="Confirm password">
+
+                    Confirmar contraseña
+
+                </label>
+
+
+                <input
+                    type="password"
+                    id="registro-password-confirmar"
+                    placeholder="••••••••"
+                    required>
+
+
+            </div>
+
+
+
+
+
+            <button 
+                type="submit"
+                class="btn-acceso"
+                data-es="Continuar registro"
+                data-en="Continue registration">
+
+                Continuar registro
+
+            </button>
+
+
+        </form>
+
+
+
+
+
+        <button 
+            class="volver-acceso"
+            id="btn-volver-login"
+            data-es="Volver al inicio"
+            data-en="Back to login">
+
+            Volver al inicio
+
+        </button>
+
+
+
     </div>
 
-    <script src="js/main.js"></script>
+
+</section>
+
+
+<!-- =========================================
+     VERIFICACIÓN MFA
+     ========================================= -->
+
+
+<section id="vista-verificacion" class="pantalla-secundaria oculto">
+
+
+    <div class="tarjeta-proceso">
+
+
+        <header class="encabezado-proceso">
+
+
+            <div class="icono-seguridad">
+
+                <i class="fas fa-shield-halved"></i>
+
+            </div>
+
+
+
+            <h2
+                data-es="Verificación de identidad"
+                data-en="Identity verification">
+
+                Verificación de identidad
+
+            </h2>
+
+
+
+            <p
+                data-es="Ingresa el código enviado a tu correo"
+                data-en="Enter the code sent to your email">
+
+                Ingresa el código enviado a tu correo
+
+            </p>
+
+
+        </header>
+
+
+
+
+
+
+        <form id="form-mfa">
+
+
+            <div class="campo-formulario">
+
+
+                <label for="codigo-verificacion"
+                    data-es="Código de seguridad"
+                    data-en="Security code">
+
+                    Código de seguridad
+
+                </label>
+
+
+
+                <input
+                    type="text"
+                    id="codigo-verificacion"
+                    maxlength="6"
+                    placeholder="000000"
+                    required>
+
+
+
+            </div>
+
+
+
+
+
+            <button
+                type="submit"
+                class="btn-acceso"
+                data-es="Verificar cuenta"
+                data-en="Verify account">
+
+                Verificar cuenta
+
+            </button>
+
+
+
+
+        </form>
+
+
+
+
+
+        <button
+            id="reenviar-codigo"
+            class="accion-secundaria"
+            data-es="Reenviar código"
+            data-en="Resend code">
+
+            Reenviar código
+
+        </button>
+
+
+
+
+    </div>
+
+
+</section>
+
+
+<!-- =========================================
+     SELECCIÓN DE PLAN
+     ========================================= -->
+
+
+<section id="vista-planes" class="pantalla-secundaria oculto">
+
+
+    <div class="contenedor-planes">
+
+
+        <header class="encabezado-proceso">
+
+
+            <h2
+                data-es="Selecciona tu nivel de operación"
+                data-en="Select your operation level">
+
+                Selecciona tu nivel de operación
+
+            </h2>
+
+
+            <p
+                data-es="Elige las capacidades que necesita tu organización"
+                data-en="Choose the capabilities your organization needs">
+
+                Elige las capacidades que necesita tu organización
+
+            </p>
+
+
+        </header>
+
+
+
+
+
+
+        <div class="grid-planes">
+
+
+
+
+
+            <article class="plan-operacion">
+
+
+                <h3>
+                    Starter
+                </h3>
+
+
+                <div class="precio-plan">
+
+                    $0
+                    <span>/mes</span>
+
+                </div>
+
+
+                <ul>
+
+
+                    <li>
+                        Modelos IA básicos
+                    </li>
+
+
+                    <li>
+                        Gestión limitada de proyectos
+                    </li>
+
+
+                    <li>
+                        Reportes esenciales
+                    </li>
+
+
+                </ul>
+
+
+
+                <button 
+                    class="seleccionar-plan"
+                    data-plan="starter">
+
+                    Elegir Starter
+
+                </button>
+
+
+            </article>
+
+
+            <article class="plan-operacion destacado">
+
+
+                <div class="etiqueta-plan">
+
+                    Recomendado
+
+                </div>
+
+
+
+                <h3>
+                    Professional
+                </h3>
+
+
+                <div class="precio-plan">
+
+                    $29
+                    <span>/mes</span>
+
+                </div>
+
+
+
+                <ul>
+
+
+                    <li>
+                        Inteligencia artificial avanzada
+                    </li>
+
+
+                    <li>
+                        Proyectos ilimitados
+                    </li>
+
+
+                    <li>
+                        Analítica empresarial
+                    </li>
+
+
+                    <li>
+                        Exportación de reportes
+                    </li>
+
+
+                </ul>
+
+
+
+
+                <button
+                    class="seleccionar-plan principal"
+                    data-plan="professional">
+
+                    Elegir Professional
+
+                </button>
+
+
+
+            </article>
+
+            <article class="plan-operacion">
+
+
+                <h3>
+                    Enterprise
+                </h3>
+
+
+                <div class="precio-plan">
+
+                    $99
+                    <span>/mes</span>
+
+                </div>
+
+
+
+
+                <ul>
+
+
+                    <li>
+                        Ecosistema completo IA
+                    </li>
+                    <li>
+                        API personalizada
+                    </li>
+                    <li>
+                        Soporte especializado
+                    </li>
+                </ul>
+                <button
+                    class="seleccionar-plan"
+                    data-plan="enterprise">
+
+                    Elegir Enterprise
+
+                </button>
+            </article>
+        </div>
+    </div>
+</section>
+
+<!-- =========================================
+     PLATAFORMA PRINCIPAL GLOBALTECH
+     ========================================= -->
+
+
+<div id="plataforma-globaltech" class="plataforma oculto">
+
+
+
+    <!-- =====================================
+         NAVEGACIÓN LATERAL
+         ===================================== -->
+
+
+    <aside class="barra-lateral">
+
+
+        <!-- Identidad -->
+
+        <div class="marca-plataforma">
+            <div class="logo-marca-lateral">
+                GT
+            </div>
+
+            <div class="texto-marca-lateral">
+                <h2>
+                    GlobalTech
+                </h2>
+
+                <span>
+                    Cognitive Operations Platform
+                </span>
+            </div>
+        </div>
+
+
+
+
+
+            <!-- Menú principal -->
+
+            <nav class="menu-principal">
+
+
+
+                <button 
+                    class="item-menu activo"
+                    data-seccion="vista-centro">
+
+
+                    <i class="fa-solid fa-grid-2"></i>
+
+
+                <span
+                    data-es="Centro de Operaciones"
+                    data-en="Operations Center">
+
+                    Centro de Operaciones
+
+                </span>
+
+
+            </button>
+
+
+
+
+
+
+
+            <button 
+                class="item-menu"
+                data-seccion="vista-ia">
+
+
+                <i class="fa-solid fa-microchip"></i>
+
+
+                <span
+                    data-es="Laboratorio IA"
+                    data-en="AI Laboratory">
+
+                    Laboratorio IA
+
+                </span>
+
+
+            </button>
+
+
+
+
+
+
+
+            <button 
+                class="item-menu"
+                data-seccion="vista-clientes">
+
+
+                <i class="fa-solid fa-building"></i>
+
+
+                <span
+                    data-es="Ecosistema de Clientes"
+                    data-en="Client Ecosystem">
+
+                    Ecosistema de Clientes
+
+                </span>
+
+
+            </button>
+
+
+
+
+
+
+
+            <button 
+                class="item-menu"
+                data-seccion="vista-proyectos">
+
+
+                <i class="fa-solid fa-diagram-project"></i>
+
+
+                <span
+                    data-es="Flujo de Proyectos"
+                    data-en="Project Pipeline">
+
+                    Flujo de Proyectos
+
+                </span>
+
+
+            </button>
+
+
+
+
+
+
+
+            <button 
+                class="item-menu"
+                data-seccion="vista-studios">
+
+
+                <i class="fa-solid fa-users-gear"></i>
+
+
+                <span
+                    data-es="Red de Studios y Pods"
+                    data-en="Studios and Pods Network">
+
+                    Red de Studios y Pods
+
+                </span>
+
+
+            </button>
+
+
+
+
+
+
+
+            <button 
+                class="item-menu"
+                data-seccion="vista-negocio">
+
+
+                <i class="fa-solid fa-chart-line"></i>
+
+
+                <span
+                    data-es="Inteligencia de Negocio"
+                    data-en="Business Intelligence">
+
+                    Inteligencia de Negocio
+
+                </span>
+
+
+            </button>
+
+
+
+
+
+
+
+            <button 
+                class="item-menu"
+                data-seccion="vista-finanzas">
+
+
+                <i class="fa-solid fa-wallet"></i>
+
+
+                <span
+                    data-es="Gestión Financiera"
+                    data-en="Financial Management">
+
+                    Gestión Financiera
+
+                </span>
+
+
+            </button>
+
+
+
+
+
+
+
+            <button 
+                class="item-menu"
+                data-seccion="vista-configuracion">
+
+
+                <i class="fa-solid fa-sliders"></i>
+
+
+                <span
+                    data-es="Configuración"
+                    data-en="Settings">
+
+                    Configuración
+
+                </span>
+
+
+            </button>
+
+
+
+
+        </nav>
+
+
+
+
+
+
+
+        <!-- Usuario conectado -->
+
+
+        <div class="perfil-usuario">
+            <div class="resumen-usuario">
+                <div class="avatar-usuario">
+
+                    GT
+
+                </div>
+
+
+
+                <div class="datos-usuario">
+
+
+                    <strong id="nombre-usuario">
+
+                        Usuario
+
+                    </strong>
+
+
+
+                    <span id="plan-usuario">
+
+                        Professional
+
+                    </span>
+
+
+                </div>
+            </div>
+
+            <button
+                type="button"
+                id="btn-cerrar-sesion"
+                class="boton-sesion">
+                <i class="fa-solid fa-right-from-bracket"></i>
+                <span
+                    data-es="Cerrar sesión"
+                    data-en="Sign out">
+                    Cerrar sesión
+                </span>
+            </button>
+        </div>
+
+
+
+    </aside>
+
+
+
+
+
+
+
+
+
+    <!-- =====================================
+         CONTENIDO PRINCIPAL
+         ===================================== -->
+
+
+    <main class="contenido-plataforma">
+
+
+
+
+
+
+        <!-- =================================
+             CENTRO DE OPERACIONES
+             ================================= -->
+
+
+        <section 
+            id="vista-centro"
+            class="modulo activo">
+
+
+
+
+
+
+            <header class="cabecera-modulo">
+
+
+                <div>
+
+
+                    <h1
+                        data-es="Centro de Operaciones"
+                        data-en="Operations Center">
+
+
+                        Centro de Operaciones
+
+
+                    </h1>
+
+
+
+
+
+                    <p
+                        data-es="Supervisa el estado general de la plataforma, proyectos e inteligencia artificial."
+                        data-en="Monitor the overall status of the platform, projects and artificial intelligence.">
+
+
+                        Supervisa el estado general de la plataforma,
+                        proyectos e inteligencia artificial.
+
+
+                    </p>
+
+
+                </div>
+
+
+
+
+
+
+                <div class="estado-sistema">
+
+
+                    <span class="indicador-activo"></span>
+
+
+                    Sistema operativo
+
+
+                </div>
+
+
+
+            </header>
+
+
+
+
+
+
+
+
+
+            <!-- Indicadores estratégicos -->
+
+
+            <div class="panel-indicadores">
+
+
+
+
+
+                <article class="tarjeta-indicador">
+
+
+                    <span
+                        data-es="Modelos IA activos"
+                        data-en="Active AI Models">
+
+                        Modelos IA activos
+
+                    </span>
+
+
+                    <strong>
+
+                        24
+
+                    </strong>
+
+
+                    <small>
+
+                        Actualizados hoy
+
+                    </small>
+
+
+                </article>
+
+
+
+
+
+
+
+
+
+                <article class="tarjeta-indicador">
+
+
+                    <span
+                        data-es="Proyectos activos"
+                        data-en="Active Projects">
+
+                        Proyectos activos
+
+                    </span>
+
+
+                    <strong>
+
+                        18
+
+                    </strong>
+
+
+                    <small>
+
+                        En ejecución
+
+                    </small>
+
+
+                </article>
+
+
+
+
+
+
+
+
+
+                <article class="tarjeta-indicador">
+
+
+                    <span
+                        data-es="Clientes globales"
+                        data-en="Global Clients">
+
+                        Clientes globales
+
+                    </span>
+
+
+                    <strong>
+
+                        42
+
+                    </strong>
+
+
+                    <small>
+
+                        Organizaciones conectadas
+
+                    </small>
+
+
+                </article>
+
+
+
+
+
+
+
+
+
+                <article class="tarjeta-indicador">
+
+
+                    <span
+                        data-es="Precisión IA"
+                        data-en="AI Accuracy">
+
+                        Precisión IA
+
+                    </span>
+
+
+                    <strong>
+
+                        98.6%
+
+                    </strong>
+
+
+                    <small>
+
+                        Rendimiento promedio
+
+                    </small>
+
+
+                </article>
+
+
+
+
+
+            </div>
+
+
+
+
+
+
+
+
+
+            <!-- Actividad del ecosistema -->
+
+
+            <div class="panel-operaciones">
+
+
+
+
+
+                <article class="bloque-operacion">
+
+
+                    <h3
+                        data-es="Actividad reciente"
+                        data-en="Recent Activity">
+
+                        Actividad reciente
+
+                    </h3>
+
+
+
+
+
+                    <ul class="lista-actividad">
+
+
+                        <li>
+
+                            Modelo Vision AI actualizado
+
+                        </li>
+
+
+                        <li>
+
+                            Nuevo proyecto integrado
+
+                        </li>
+
+
+                        <li>
+
+                            Pod de innovación sincronizado
+
+                        </li>
+
+
+                    </ul>
+
+
+
+                </article>
+
+
+
+
+
+
+
+
+
+                <article class="bloque-operacion">
+
+
+                    <h3
+                        data-es="Estado inteligente"
+                        data-en="Intelligent Status">
+
+                        Estado inteligente
+
+                    </h3>
+
+
+
+
+                    <p>
+
+                        Todos los servicios funcionan correctamente.
+
+                    </p>
+
+
+
+
+                </article>
+
+
+
+
+
+            </div>
+
+
+
+
+
+        </section>
+<!-- =========================================
+     LABORATORIO DE INTELIGENCIA ARTIFICIAL
+     ========================================= -->
+
+
+<section 
+    id="vista-ia"
+    class="modulo">
+
+
+
+
+
+    <header class="cabecera-modulo">
+
+
+        <div>
+
+
+            <h1
+                data-es="Laboratorio de Inteligencia Artificial"
+                data-en="Artificial Intelligence Laboratory">
+
+
+                Laboratorio de Inteligencia Artificial
+
+
+            </h1>
+
+
+
+            <p
+                data-es="Analiza información mediante modelos inteligentes simulados."
+                data-en="Analyze information using simulated intelligent models.">
+
+
+                Analiza información mediante modelos inteligentes simulados.
+
+
+            </p>
+
+
+        </div>
+
+
+
+        <div class="estado-modelo">
+
+
+            <span class="indicador-activo"></span>
+
+
+            Modelo activo
+
+
+        </div>
+
+
+
+    </header>
+
+
+
+
+
+
+
+
+
+    <!-- ===============================
+         TIPOS DE PROCESAMIENTO
+         =============================== -->
+
+
+    <div class="panel-tipos-ia">
+
+
+
+
+
+        <article class="tipo-ia activo">
+
+
+            <i class="fa-solid fa-message"></i>
+
+
+            <h3
+                data-es="Inteligencia Conversacional"
+                data-en="Conversational Intelligence">
+
+
+                Inteligencia Conversacional
+
+
+            </h3>
+
+
+
+            <p
+                data-es="Analiza textos y genera respuestas inteligentes."
+                data-en="Analyze texts and generate intelligent responses.">
+
+
+                Analiza textos y genera respuestas inteligentes.
+
+
+            </p>
+
+
+
+        </article>
+
+
+
+
+
+
+
+
+        <article class="tipo-ia">
+
+
+            <i class="fa-solid fa-image"></i>
+
+
+            <h3
+                data-es="Visión Artificial"
+                data-en="Computer Vision">
+
+
+                Visión Artificial
+
+
+            </h3>
+
+
+
+            <p
+                data-es="Procesamiento y clasificación de imágenes."
+                data-en="Image processing and classification.">
+
+
+                Procesamiento y clasificación de imágenes.
+
+
+            </p>
+
+
+
+        </article>
+
+
+
+
+
+
+
+
+        <article class="tipo-ia">
+
+
+            <i class="fa-solid fa-wave-square"></i>
+
+
+            <h3
+                data-es="Análisis de Voz"
+                data-en="Voice Analytics">
+
+
+                Análisis de Voz
+
+
+            </h3>
+
+
+
+            <p
+                data-es="Interpretación de comandos mediante audio."
+                data-en="Interpret voice commands.">
+
+
+                Interpretación de comandos mediante audio.
+
+
+            </p>
+
+
+
+        </article>
+
+
+
+
+
+    </div>
+
+
+
+
+
+
+
+
+
+    <!-- ===============================
+         ÁREA PRINCIPAL DE ANÁLISIS
+         =============================== -->
+
+
+    <div class="contenedor-inteligencia">
+
+
+
+
+
+        <div class="entrada-modelo">
+
+
+
+            <header>
+
+
+                <h3
+                    data-es="Entrada de información"
+                    data-en="Information Input">
+
+
+                    Entrada de información
+
+
+                </h3>
+
+
+            </header>
+
+
+
+
+
+
+            <textarea 
+                id="entrada-ia"
+                placeholder="Escribe una consulta para analizar...">
+
+
+            </textarea>
+
+
+
+
+
+            <button 
+                id="ejecutar-analisis"
+                class="btn-acceso">
+
+
+                Ejecutar análisis
+
+
+            </button>
+
+
+
+
+        </div>
+
+
+
+
+
+
+
+
+        <div class="resultado-modelo">
+
+
+
+            <header>
+
+
+                <h3
+                    data-es="Resultado del modelo"
+                    data-en="Model Result">
+
+
+                    Resultado del modelo
+
+
+                </h3>
+
+
+            </header>
+
+
+
+
+
+
+
+            <div class="resultado-contenido">
+
+
+                <p id="respuesta-ia">
+
+
+                    Esperando información...
+
+
+                </p>
+
+
+
+            </div>
+
+
+
+
+
+
+            <div class="metricas-modelo">
+
+
+
+                <div>
+
+
+                    <span>
+
+                        Precisión
+
+                    </span>
+
+
+                    <strong>
+
+                        98.4%
+
+                    </strong>
+
+
+
+                </div>
+
+
+
+
+
+
+                <div>
+
+
+                    <span>
+
+                        Tiempo respuesta
+
+                    </span>
+
+
+                    <strong>
+
+                        1.2s
+
+                    </strong>
+
+
+
+                </div>
+
+
+
+
+
+
+                <div>
+
+
+                    <span>
+
+                        Modelo
+
+                    </span>
+
+
+                    <strong>
+
+                        GT Neural Core
+
+                    </strong>
+
+
+
+                </div>
+
+
+
+            </div>
+
+
+
+
+
+
+        </div>
+
+
+
+
+    </div>
+
+
+
+
+
+
+
+
+
+    <!-- ===============================
+         HISTORIAL Y ENTRENAMIENTO
+         =============================== -->
+
+
+
+    <div class="panel-aprendizaje">
+
+
+
+
+
+        <article>
+
+
+            <h3
+                data-es="Historial de análisis"
+                data-en="Analysis History">
+
+
+                Historial de análisis
+
+
+            </h3>
+
+
+
+
+
+            <ul>
+
+
+                <li>
+
+                    Clasificación de sentimiento completada
+
+                </li>
+
+
+                <li>
+
+                    Imagen procesada correctamente
+
+                </li>
+
+
+                <li>
+
+                    Modelo actualizado
+
+                </li>
+
+
+            </ul>
+
+
+
+        </article>
+
+
+
+
+
+
+
+        <article>
+
+
+            <h3
+                data-es="Entrenamiento de modelos"
+                data-en="Model Training">
+
+
+                Entrenamiento de modelos
+
+
+            </h3>
+
+
+
+
+
+            <p>
+
+
+                Última actualización:
+
+                <strong>
+
+                    Hace 2 horas
+
+                </strong>
+
+
+            </p>
+
+
+
+            <button class="accion-secundaria">
+
+
+                Iniciar entrenamiento simulado
+
+
+            </button>
+
+
+
+        </article>
+
+
+
+
+
+    </div>
+
+
+</section>
+
+<!-- =========================================
+     ECOSISTEMA DE CLIENTES
+     ========================================= -->
+
+
+<section 
+    id="vista-clientes"
+    class="modulo">
+
+
+
+
+
+    <header class="cabecera-modulo">
+
+
+        <div>
+
+
+            <h1
+                data-es="Ecosistema de Clientes"
+                data-en="Client Ecosystem">
+
+
+                Ecosistema de Clientes
+
+
+            </h1>
+
+
+
+
+            <p
+                data-es="Administra organizaciones, relaciones estratégicas y proyectos asociados."
+                data-en="Manage organizations, strategic relationships and associated projects.">
+
+
+                Administra organizaciones, relaciones estratégicas y proyectos asociados.
+
+
+            </p>
+
+
+
+        </div>
+
+
+
+
+
+        <button class="accion-secundaria">
+
+
+            Nuevo cliente
+
+
+        </button>
+
+
+
+    </header>
+
+
+
+
+
+
+
+
+
+    <!-- =================================
+         RESUMEN CLIENTES
+         ================================= -->
+
+
+    <div class="panel-indicadores">
+
+
+
+
+
+        <article class="tarjeta-indicador">
+
+
+            <span
+                data-es="Clientes activos"
+                data-en="Active Clients">
+
+
+                Clientes activos
+
+
+            </span>
+
+
+            <strong>
+
+                42
+
+            </strong>
+
+
+
+            <small>
+
+                Organizaciones conectadas
+
+            </small>
+
+
+        </article>
+
+
+
+
+
+
+
+        <article class="tarjeta-indicador">
+
+
+            <span
+                data-es="Proyectos asociados"
+                data-en="Associated Projects">
+
+
+                Proyectos asociados
+
+
+            </span>
+
+
+            <strong>
+
+                86
+
+            </strong>
+
+
+
+            <small>
+
+                En diferentes etapas
+
+            </small>
+
+
+        </article>
+
+
+
+
+
+
+
+        <article class="tarjeta-indicador">
+
+
+            <span
+                data-es="Satisfacción"
+                data-en="Satisfaction">
+
+
+                Satisfacción
+
+
+            </span>
+
+
+            <strong>
+
+                96%
+
+            </strong>
+
+
+
+            <small>
+
+                Evaluación promedio
+
+            </small>
+
+
+        </article>
+
+
+
+
+
+    </div>
+
+
+
+
+
+
+
+
+
+    <!-- =================================
+         TARJETAS DE CLIENTES
+         ================================= -->
+
+
+    <div class="grid-clientes">
+
+
+
+
+
+        <article class="tarjeta-cliente">
+
+
+
+            <div class="cabecera-cliente">
+
+
+                <div class="logo-cliente">
+
+                    TN
+
+                </div>
+
+
+
+                <div>
+
+
+                    <h3>
+
+                        TechNova
+
+                    </h3>
+
+
+
+                    <span>
+
+                        Tecnología
+
+                    </span>
+
+
+                </div>
+
+
+            </div>
+
+
+
+
+
+
+            <div class="datos-cliente">
+
+
+                <p>
+
+                    <strong>
+                        País:
+                    </strong>
+
+                    Perú
+
+                </p>
+
+
+
+                <p>
+
+                    <strong>
+                        Proyectos:
+                    </strong>
+
+                    8 activos
+
+                </p>
+
+
+
+
+                <p>
+
+                    <strong>
+                        Studio:
+                    </strong>
+
+                    AI Innovation
+
+                </p>
+
+
+            </div>
+
+
+
+
+
+            <div class="estado-cliente activo">
+
+
+                Cliente estratégico
+
+
+            </div>
+
+
+
+        </article>
+
+
+
+
+
+
+
+
+
+        <article class="tarjeta-cliente">
+
+
+
+            <div class="cabecera-cliente">
+
+
+                <div class="logo-cliente">
+
+                    BG
+
+                </div>
+
+
+
+                <div>
+
+
+                    <h3>
+
+                        Banco Global
+
+                    </h3>
+
+
+
+                    <span>
+
+                        Finanzas
+
+                    </span>
+
+
+                </div>
+
+
+            </div>
+
+
+
+
+
+
+
+            <div class="datos-cliente">
+
+
+                <p>
+
+                    <strong>
+                        País:
+                    </strong>
+
+                    México
+
+                </p>
+
+
+
+                <p>
+
+                    <strong>
+                        Proyectos:
+                    </strong>
+
+                    5 activos
+
+                </p>
+
+
+
+                <p>
+
+                    <strong>
+                        Studio:
+                    </strong>
+
+                    Data Intelligence
+
+                </p>
+
+
+
+            </div>
+
+
+
+
+
+
+            <div class="estado-cliente activo">
+
+
+                Implementación
+
+
+            </div>
+
+
+
+
+        </article>
+
+
+
+
+
+
+
+
+
+        <article class="tarjeta-cliente">
+
+
+
+            <div class="cabecera-cliente">
+
+
+                <div class="logo-cliente">
+
+                    MC
+
+                </div>
+
+
+
+                <div>
+
+
+                    <h3>
+
+                        MedCorp
+
+                    </h3>
+
+
+
+                    <span>
+
+                        Salud
+
+                    </span>
+
+
+                </div>
+
+
+            </div>
+
+
+
+
+
+
+
+
+            <div class="datos-cliente">
+
+
+                <p>
+
+                    <strong>
+                        País:
+                    </strong>
+
+                    Colombia
+
+                </p>
+
+
+
+
+                <p>
+
+                    <strong>
+                        Proyectos:
+                    </strong>
+
+                    3 activos
+
+                </p>
+
+
+
+
+                <p>
+
+                    <strong>
+                        Studio:
+                    </strong>
+
+                    Vision AI
+
+                </p>
+
+
+            </div>
+
+
+
+
+
+
+            <div class="estado-cliente">
+
+
+                En evaluación
+
+
+            </div>
+
+
+
+
+        </article>
+
+
+
+
+
+    </div>
+
+
+
+
+
+
+
+
+
+    <!-- =================================
+         RELACIÓN CLIENTE - EQUIPO
+         ================================= -->
+
+
+    <div class="panel-operaciones">
+
+
+
+
+
+        <article class="bloque-operacion">
+
+
+            <h3
+                data-es="Equipos asignados"
+                data-en="Assigned Teams">
+
+
+                Equipos asignados
+
+
+            </h3>
+
+
+
+            <ul class="lista-actividad">
+
+
+                <li>
+
+                    AI Innovation Pod → TechNova
+
+                </li>
+
+
+                <li>
+
+                    Data Intelligence Pod → Banco Global
+
+                </li>
+
+
+                <li>
+
+                    Vision AI Pod → MedCorp
+
+                </li>
+
+
+            </ul>
+
+
+
+        </article>
+
+
+
+
+
+
+        <article class="bloque-operacion">
+
+
+            <h3
+                data-es="Próximas acciones"
+                data-en="Upcoming Actions">
+
+
+                Próximas acciones
+
+
+            </h3>
+
+
+
+
+            <p>
+
+                Revisar nuevos requerimientos empresariales.
+
+            </p>
+
+
+
+        </article>
+
+
+
+
+    </div>
+
+</section>
+
+<!-- =========================================
+     FLUJO DE PROYECTOS
+     ========================================= -->
+
+
+<section
+    id="vista-proyectos"
+    class="modulo">
+
+
+
+
+
+
+    <header class="cabecera-modulo">
+
+
+        <div>
+
+
+            <h1
+                data-es="Flujo de Proyectos"
+                data-en="Project Pipeline">
+
+
+                Flujo de Proyectos
+
+
+            </h1>
+
+
+
+            <p
+                data-es="Gestiona proyectos digitales desde la planificación hasta producción."
+                data-en="Manage digital projects from planning to production.">
+
+
+                Gestiona proyectos digitales desde la planificación hasta producción.
+
+
+            </p>
+
+
+        </div>
+
+
+
+
+
+        <button class="accion-secundaria">
+
+
+            Nuevo proyecto
+
+
+        </button>
+
+
+
+    </header>
+
+
+
+
+
+
+
+
+
+    <!-- =================================
+         RESUMEN GENERAL
+         ================================= -->
+
+
+    <div class="panel-indicadores">
+
+
+
+
+
+        <article class="tarjeta-indicador">
+
+
+            <span
+                data-es="Proyectos activos"
+                data-en="Active Projects">
+
+
+                Proyectos activos
+
+
+            </span>
+
+
+            <strong>
+
+                18
+
+            </strong>
+
+
+
+            <small>
+
+                En desarrollo
+
+            </small>
+
+
+        </article>
+
+
+
+
+
+
+
+
+        <article class="tarjeta-indicador">
+
+
+            <span
+                data-es="Equipos asignados"
+                data-en="Assigned Teams">
+
+
+                Equipos asignados
+
+
+            </span>
+
+
+            <strong>
+
+                12
+
+            </strong>
+
+
+
+            <small>
+
+                Studios y Pods
+
+            </small>
+
+
+        </article>
+
+
+
+
+
+
+
+        <article class="tarjeta-indicador">
+
+
+            <span
+                data-es="Tiempo promedio"
+                data-en="Average Time">
+
+
+                Tiempo promedio
+
+
+            </span>
+
+
+            <strong>
+
+                42 días
+
+            </strong>
+
+
+
+            <small>
+
+                Ciclo completo
+
+            </small>
+
+
+        </article>
+
+
+
+
+
+    </div>
+
+
+
+
+
+
+
+
+
+    <!-- =================================
+         TABLERO KANBAN
+         ================================= -->
+
+
+    <div class="tablero-proyectos">
+
+
+
+
+
+
+
+        <!-- FASE 1 -->
+
+
+        <article class="columna-proyecto">
+
+
+            <header>
+
+
+                <h3
+                    data-es="Planificación"
+                    data-en="Planning">
+
+
+                    Planificación
+
+
+                </h3>
+
+
+
+                <span>
+
+                    3
+
+                </span>
+
+
+            </header>
+
+
+
+
+
+            <div class="tarjeta-proyecto">
+
+
+
+                <h4>
+
+                    Automatización empresarial
+
+                </h4>
+
+
+
+                <p>
+
+                    Cliente: TechNova
+
+                </p>
+
+
+
+                <div class="informacion-proyecto">
+
+
+                    <span>
+
+                        IA
+
+                    </span>
+
+
+                    <span>
+
+                        Alta prioridad
+
+                    </span>
+
+
+                </div>
+
+
+            </div>
+
+
+
+
+
+
+
+        </article>
+
+
+
+
+
+
+
+
+
+        <!-- FASE 2 -->
+
+
+        <article class="columna-proyecto">
+
+
+            <header>
+
+
+                <h3
+                    data-es="Diseño"
+                    data-en="Design">
+
+
+                    Diseño
+
+
+                </h3>
+
+
+
+                <span>
+
+                    5
+
+                </span>
+
+
+            </header>
+
+
+
+
+
+            <div class="tarjeta-proyecto">
+
+
+
+                <h4>
+
+                    Plataforma inteligente
+
+                </h4>
+
+
+
+                <p>
+
+                    Cliente: Banco Global
+
+                </p>
+
+
+
+
+                <div class="informacion-proyecto">
+
+
+                    <span>
+
+                        UX/UI
+
+                    </span>
+
+
+                    <span>
+
+                        En progreso
+
+                    </span>
+
+
+                </div>
+
+
+            </div>
+
+
+
+
+
+
+
+        </article>
+
+
+
+
+
+
+
+
+
+        <!-- FASE 3 -->
+
+
+        <article class="columna-proyecto">
+
+
+            <header>
+
+
+                <h3
+                    data-es="Desarrollo IA"
+                    data-en="AI Development">
+
+
+                    Desarrollo IA
+
+
+                </h3>
+
+
+
+                <span>
+
+                    7
+
+                </span>
+
+
+            </header>
+
+
+
+
+
+
+            <div class="tarjeta-proyecto">
+
+
+
+                <h4>
+
+                    Sistema predictivo
+
+                </h4>
+
+
+
+                <p>
+
+                    Cliente: MedCorp
+
+                </p>
+
+
+
+
+                <div class="informacion-proyecto">
+
+
+                    <span>
+
+                        Machine Learning
+
+                    </span>
+
+
+                    <span>
+
+                        75%
+
+                    </span>
+
+
+                </div>
+
+
+            </div>
+
+
+
+
+
+
+
+        </article>
+
+
+
+
+
+
+
+
+
+        <!-- FASE 4 -->
+
+
+        <article class="columna-proyecto">
+
+
+            <header>
+
+
+                <h3
+                    data-es="Producción"
+                    data-en="Production">
+
+
+                    Producción
+
+
+                </h3>
+
+
+
+                <span>
+
+                    3
+
+                </span>
+
+
+            </header>
+
+
+
+
+
+            <div class="tarjeta-proyecto">
+
+
+
+                <h4>
+
+                    Asistente corporativo IA
+
+                </h4>
+
+
+
+                <p>
+
+                    Cliente: Global Finance
+
+                </p>
+
+
+
+
+                <div class="informacion-proyecto">
+
+
+                    <span>
+
+                        Operativo
+
+                    </span>
+
+
+                    <span>
+
+                        100%
+
+                    </span>
+
+
+                </div>
+
+
+            </div>
+
+
+
+
+
+
+
+        </article>
+
+
+
+
+
+
+    </div>
+
+
+
+
+
+
+
+
+
+    <!-- =================================
+         DETALLE DE PROYECTO
+         ================================= -->
+
+
+    <div class="panel-operaciones">
+
+
+
+
+
+        <article class="bloque-operacion">
+
+
+            <h3
+                data-es="Equipo responsable"
+                data-en="Responsible Team">
+
+
+                Equipo responsable
+
+
+            </h3>
+
+
+
+
+            <ul class="lista-actividad">
+
+
+                <li>
+
+                    Studio AI Innovation
+
+                </li>
+
+
+                <li>
+
+                    Pod Machine Learning Alpha
+
+                </li>
+
+
+                <li>
+
+                    Equipo QA Intelligence
+
+                </li>
+
+
+            </ul>
+
+
+
+        </article>
+
+
+
+
+
+
+
+
+        <article class="bloque-operacion">
+
+
+            <h3
+                data-es="Próximo objetivo"
+                data-en="Next Goal">
+
+
+                Próximo objetivo
+
+
+            </h3>
+
+
+
+
+            <p>
+
+                Finalizar pruebas del modelo antes de pasar a producción.
+
+            </p>
+
+
+
+        </article>
+
+
+
+
+
+
+    </div>
+
+</section>
+
+<!-- =========================================
+     RED DE STUDIOS Y PODS
+     ========================================= -->
+
+
+<section
+    id="vista-studios"
+    class="modulo">
+
+
+
+
+
+    <header class="cabecera-modulo">
+
+
+        <div>
+
+
+            <h1
+                data-es="Red de Studios y Pods"
+                data-en="Studios and Pods Network">
+
+
+                Red de Studios y Pods
+
+
+            </h1>
+
+
+
+
+            <p
+                data-es="Organiza equipos especializados para desarrollar soluciones inteligentes."
+                data-en="Organize specialized teams to build intelligent solutions.">
+
+
+                Organiza equipos especializados para desarrollar soluciones inteligentes.
+
+
+            </p>
+
+
+
+        </div>
+
+
+
+
+        <button class="accion-secundaria">
+
+
+            Nuevo Studio
+
+
+        </button>
+
+
+
+    </header>
+
+
+
+
+
+
+
+
+
+    <!-- =================================
+         INDICADORES DE EQUIPO
+         ================================= -->
+
+
+    <div class="panel-indicadores">
+
+
+
+
+
+        <article class="tarjeta-indicador">
+
+
+            <span
+                data-es="Studios activos"
+                data-en="Active Studios">
+
+
+                Studios activos
+
+
+            </span>
+
+
+            <strong>
+
+                6
+
+            </strong>
+
+
+
+            <small>
+
+                Áreas especializadas
+
+            </small>
+
+
+        </article>
+
+
+
+
+
+
+
+        <article class="tarjeta-indicador">
+
+
+            <span
+                data-es="Pods operativos"
+                data-en="Operational Pods">
+
+
+                Pods operativos
+
+
+            </span>
+
+
+            <strong>
+
+                18
+
+            </strong>
+
+
+
+            <small>
+
+                Equipos especializados
+
+            </small>
+
+
+        </article>
+
+
+
+
+
+
+
+        <article class="tarjeta-indicador">
+
+
+            <span
+                data-es="Especialistas"
+                data-en="Specialists">
+
+
+                Especialistas
+
+
+            </span>
+
+
+            <strong>
+
+                124
+
+            </strong>
+
+
+
+            <small>
+
+                Talento conectado
+
+            </small>
+
+
+        </article>
+
+
+
+
+
+    </div>
+
+
+
+
+
+
+
+
+
+    <!-- =================================
+         MAPA DE STUDIOS
+         ================================= -->
+
+
+    <div class="red-studios">
+
+
+
+
+
+        <!-- STUDIO IA -->
+
+
+        <article class="studio-card">
+
+
+            <header>
+
+
+                <div class="icono-studio">
+
+
+                    <i class="fa-solid fa-brain"></i>
+
+
+                </div>
+
+
+
+                <div>
+
+
+                    <h3>
+
+                        AI Innovation Studio
+
+                    </h3>
+
+
+
+                    <span>
+
+                        Inteligencia Artificial
+
+                    </span>
+
+
+                </div>
+
+
+            </header>
+
+
+
+
+
+            <div class="pods-container">
+
+
+                <h4>
+
+                    Pods asignados
+
+                </h4>
+
+
+
+                <div class="pod">
+
+
+                    <strong>
+
+                        Machine Learning Alpha
+
+                    </strong>
+
+
+
+                    <span>
+
+                        8 especialistas
+
+                    </span>
+
+
+                </div>
+
+
+
+
+
+                <div class="pod">
+
+
+                    <strong>
+
+                        Vision AI
+
+                    </strong>
+
+
+
+                    <span>
+
+                        6 especialistas
+
+                    </span>
+
+
+                </div>
+
+
+
+            </div>
+
+
+
+
+
+            <footer>
+
+
+                12 proyectos activos
+
+
+            </footer>
+
+
+
+        </article>
+
+
+
+
+
+
+
+
+
+        <!-- DATA STUDIO -->
+
+
+        <article class="studio-card">
+
+
+            <header>
+
+
+                <div class="icono-studio">
+
+
+                    <i class="fa-solid fa-database"></i>
+
+
+                </div>
+
+
+
+                <div>
+
+
+                    <h3>
+
+                        Data Intelligence Studio
+
+                    </h3>
+
+
+
+                    <span>
+
+                        Datos y analítica
+
+                    </span>
+
+
+                </div>
+
+
+            </header>
+
+
+
+
+
+
+            <div class="pods-container">
+
+
+                <h4>
+
+                    Pods asignados
+
+                </h4>
+
+
+
+
+                <div class="pod">
+
+
+                    <strong>
+
+                        Business Analytics
+
+                    </strong>
+
+
+
+                    <span>
+
+                        10 especialistas
+
+                    </span>
+
+
+                </div>
+
+
+
+
+
+                <div class="pod">
+
+
+                    <strong>
+
+                        Data Engineering
+
+                    </strong>
+
+
+
+                    <span>
+
+                        7 especialistas
+
+                    </span>
+
+
+                </div>
+
+
+
+
+            </div>
+
+
+
+
+
+            <footer>
+
+
+                9 proyectos activos
+
+
+            </footer>
+
+
+
+        </article>
+
+
+
+
+
+
+
+
+
+        <!-- EXPERIENCE STUDIO -->
+
+
+        <article class="studio-card">
+
+
+            <header>
+
+
+                <div class="icono-studio">
+
+
+                    <i class="fa-solid fa-pen-ruler"></i>
+
+
+                </div>
+
+
+
+                <div>
+
+
+                    <h3>
+
+                        Experience Studio
+
+                    </h3>
+
+
+
+                    <span>
+
+                        Diseño y experiencia digital
+
+                    </span>
+
+
+                </div>
+
+
+            </header>
+
+
+
+
+
+
+
+            <div class="pods-container">
+
+
+                <h4>
+
+                    Pods asignados
+
+                </h4>
+
+
+
+
+                <div class="pod">
+
+
+                    <strong>
+
+                        UX Research
+
+                    </strong>
+
+
+
+                    <span>
+
+                        5 especialistas
+
+                    </span>
+
+
+                </div>
+
+
+
+
+
+                <div class="pod">
+
+
+                    <strong>
+
+                        Product Design
+
+                    </strong>
+
+
+
+                    <span>
+
+                        9 especialistas
+
+                    </span>
+
+
+                </div>
+
+
+
+
+            </div>
+
+
+
+
+
+            <footer>
+
+
+                15 proyectos activos
+
+
+            </footer>
+
+
+
+        </article>
+
+
+
+
+
+
+    </div>
+
+
+
+
+
+
+
+
+
+    <!-- =================================
+         ESTADO GENERAL DE EQUIPOS
+         ================================= -->
+
+
+    <div class="panel-operaciones">
+
+
+
+
+
+
+        <article class="bloque-operacion">
+
+
+            <h3
+                data-es="Disponibilidad de equipos"
+                data-en="Team Availability">
+
+
+                Disponibilidad de equipos
+
+
+            </h3>
+
+
+
+
+
+            <ul class="lista-actividad">
+
+
+                <li>
+
+                    AI Innovation Studio → Disponible
+
+                </li>
+
+
+
+                <li>
+
+                    Data Intelligence Studio → Alta demanda
+
+                </li>
+
+
+
+                <li>
+
+                    Experience Studio → Disponible
+
+                </li>
+
+
+            </ul>
+
+
+
+        </article>
+
+
+
+
+
+
+
+
+        <article class="bloque-operacion">
+
+
+            <h3
+                data-es="Asignación inteligente"
+                data-en="Smart Assignment">
+
+
+                Asignación inteligente
+
+
+            </h3>
+
+
+
+
+            <p>
+
+                El sistema recomienda equipos según capacidades y requerimientos del proyecto.
+
+            </p>
+
+
+
+        </article>
+
+
+
+
+
+
+    </div>
+
+</section>
+
+
+<!-- =========================================
+     INTELIGENCIA DE NEGOCIO
+     ========================================= -->
+
+<section
+    id="vista-negocio"
+    class="modulo">
+
+
+
+
+
+    <header class="cabecera-modulo">
+
+
+        <div>
+
+
+            <h1
+                data-es="Inteligencia de Negocio"
+                data-en="Business Intelligence">
+
+
+                Inteligencia de Negocio
+
+
+            </h1>
+
+
+
+
+            <p
+                data-es="Analiza el rendimiento empresarial mediante datos estratégicos e inteligencia artificial."
+                data-en="Analyze business performance through strategic data and artificial intelligence.">
+
+
+                Analiza el rendimiento empresarial mediante datos estratégicos e inteligencia artificial.
+
+
+            </p>
+
+
+
+        </div>
+
+
+
+
+
+
+        <div class="estado-sistema">
+
+
+            <span class="indicador-activo"></span>
+
+
+            Analítica activa
+
+
+        </div>
+
+
+
+    </header>
+
+
+
+
+
+
+
+
+
+    <!-- =================================
+         INDICADORES EJECUTIVOS
+         ================================= -->
+
+
+    <div class="panel-indicadores">
+
+
+
+
+
+        <article class="tarjeta-indicador">
+
+
+            <span
+                data-es="Crecimiento anual"
+                data-en="Annual Growth">
+
+
+                Crecimiento anual
+
+
+            </span>
+
+
+
+            <strong>
+
+                +32%
+
+            </strong>
+
+
+
+            <small>
+
+                Comparado con periodo anterior
+
+            </small>
+
+
+        </article>
+
+
+
+
+
+
+
+
+        <article class="tarjeta-indicador">
+
+
+            <span
+                data-es="Ingresos proyectados"
+                data-en="Projected Revenue">
+
+
+                Ingresos proyectados
+
+
+            </span>
+
+
+
+            <strong>
+
+                $2.4M
+
+            </strong>
+
+
+
+            <small>
+
+                Estimación IA
+
+            </small>
+
+
+        </article>
+
+
+
+
+
+
+
+
+        <article class="tarjeta-indicador">
+
+
+            <span
+                data-es="Eficiencia operativa"
+                data-en="Operational Efficiency">
+
+
+                Eficiencia operativa
+
+
+            </span>
+
+
+
+            <strong>
+
+                94%
+
+            </strong>
+
+
+
+            <small>
+
+                Optimización empresarial
+
+            </small>
+
+
+        </article>
+
+
+
+
+
+
+        <article class="tarjeta-indicador">
+
+
+            <span
+                data-es="Predicciones IA"
+                data-en="AI Predictions">
+
+
+                Predicciones IA
+
+
+            </span>
+
+
+
+            <strong>
+
+                156
+
+            </strong>
+
+
+
+            <small>
+
+                Modelos generados
+
+            </small>
+
+
+        </article>
+
+
+
+
+
+
+    </div>
+
+
+
+
+
+
+
+
+
+    <!-- =================================
+         PANEL ANALÍTICO
+         ================================= -->
+
+
+    <div class="panel-analitico">
+
+
+
+
+
+
+        <article class="grafico-panel">
+
+
+            <header>
+
+
+                <h3
+                    data-es="Rendimiento empresarial"
+                    data-en="Business Performance">
+
+
+                    Rendimiento empresarial
+
+
+                </h3>
+
+
+
+                <span>
+
+                    Últimos 6 meses
+
+                </span>
+
+
+            </header>
+
+
+
+
+
+
+            <div class="grafico-linea">
+
+
+                <div class="linea-dato dato-1"></div>
+
+
+                <div class="linea-dato dato-2"></div>
+
+
+                <div class="linea-dato dato-3"></div>
+
+
+                <div class="linea-dato dato-4"></div>
+
+
+
+            </div>
+
+
+
+
+
+
+        </article>
+
+
+
+
+
+
+
+
+
+        <article class="analisis-predictivo">
+
+
+            <header>
+
+
+                <h3
+                    data-es="Predicción inteligente"
+                    data-en="Smart Prediction">
+
+
+                    Predicción inteligente
+
+
+                </h3>
+
+
+            </header>
+
+
+
+
+
+
+
+            <div class="prediccion-contenido">
+
+
+
+                <strong>
+
+                    Tendencia positiva
+
+                </strong>
+
+
+
+
+                <p>
+
+                    Los modelos proyectan un aumento de productividad del 18% durante el siguiente trimestre.
+
+                </p>
+
+
+
+            </div>
+
+
+
+
+
+
+        </article>
+
+
+
+
+
+    </div>
+
+
+
+
+
+
+
+
+
+    <!-- =================================
+         MATRIZ DE DECISIONES
+         ================================= -->
+
+
+    <div class="panel-operaciones">
+
+
+
+
+
+
+        <article class="bloque-operacion">
+
+
+            <h3
+                data-es="Áreas con mayor impacto"
+                data-en="Highest Impact Areas">
+
+
+                Áreas con mayor impacto
+
+
+            </h3>
+
+
+
+
+
+            <ul class="lista-actividad">
+
+
+                <li>
+
+                    Automatización empresarial
+
+                </li>
+
+
+
+                <li>
+
+                    Optimización de procesos
+
+                </li>
+
+
+
+                <li>
+
+                    Analítica predictiva
+
+                </li>
+
+
+            </ul>
+
+
+
+        </article>
+
+
+
+
+
+
+
+
+
+        <article class="bloque-operacion">
+
+
+            <h3
+                data-es="Recomendación del sistema"
+                data-en="System Recommendation">
+
+
+                Recomendación del sistema
+
+
+            </h3>
+
+
+
+
+            <p>
+
+                Incrementar inversión en modelos predictivos debido al crecimiento esperado.
+
+            </p>
+
+
+
+        </article>
+
+
+
+
+
+
+    </div>
+
+
+
+
+
+</section>
+<!-- =========================================
+     GESTIÓN FINANCIERA
+     ========================================= -->
+
+
+<section
+    id="vista-finanzas"
+    class="modulo">
+
+
+
+
+
+    <header class="cabecera-modulo">
+
+
+        <div>
+
+
+            <h1
+                data-es="Gestión Financiera"
+                data-en="Financial Management">
+
+
+                Gestión Financiera
+
+
+            </h1>
+
+
+
+
+            <p
+                data-es="Controla ingresos, planes, contratos y proyecciones financieras del ecosistema."
+                data-en="Manage revenue, plans, contracts and financial projections of the ecosystem.">
+
+
+                Controla ingresos, planes, contratos y proyecciones financieras del ecosistema.
+
+
+            </p>
+
+
+
+        </div>
+
+
+
+
+
+        <button class="accion-secundaria">
+
+
+            Generar reporte
+
+
+        </button>
+
+
+
+    </header>
+
+
+
+
+
+
+
+
+
+    <!-- =================================
+         INDICADORES FINANCIEROS
+         ================================= -->
+
+
+    <div class="panel-indicadores">
+
+
+
+
+
+        <article class="tarjeta-indicador">
+
+
+            <span
+                data-es="Ingresos mensuales"
+                data-en="Monthly Revenue">
+
+
+                Ingresos mensuales
+
+
+            </span>
+
+
+
+            <strong>
+
+                $184K
+
+            </strong>
+
+
+
+            <small>
+
+                Crecimiento constante
+
+            </small>
+
+
+        </article>
+
+
+
+
+
+
+
+        <article class="tarjeta-indicador">
+
+
+            <span
+                data-es="Suscripciones activas"
+                data-en="Active Subscriptions">
+
+
+                Suscripciones activas
+
+
+            </span>
+
+
+
+            <strong>
+
+                327
+
+            </strong>
+
+
+
+            <small>
+
+                Clientes empresariales
+
+            </small>
+
+
+        </article>
+
+
+
+
+
+
+
+        <article class="tarjeta-indicador">
+
+
+            <span
+                data-es="Proyectos contratados"
+                data-en="Contracted Projects">
+
+
+                Proyectos contratados
+
+
+            </span>
+
+
+
+            <strong>
+
+                86
+
+            </strong>
+
+
+
+            <small>
+
+                Servicios activos
+
+            </small>
+
+
+        </article>
+
+
+
+
+
+
+
+        <article class="tarjeta-indicador">
+
+
+            <span
+                data-es="Rentabilidad"
+                data-en="Profitability">
+
+
+                Rentabilidad
+
+
+            </span>
+
+
+
+            <strong>
+
+                72%
+
+            </strong>
+
+
+
+            <small>
+
+                Margen operativo
+
+            </small>
+
+
+        </article>
+
+
+
+
+
+    </div>
+
+
+
+
+
+
+
+
+
+    <!-- =================================
+         DISTRIBUCIÓN FINANCIERA
+         ================================= -->
+
+
+    <div class="panel-financiero">
+
+
+
+
+
+        <article class="bloque-financiero">
+
+
+            <header>
+
+
+                <h3
+                    data-es="Distribución de ingresos"
+                    data-en="Revenue Distribution">
+
+
+                    Distribución de ingresos
+
+
+                </h3>
+
+
+            </header>
+
+
+
+
+
+
+            <div class="datos-financieros">
+
+
+
+                <div>
+
+
+                    <span>
+
+                        Enterprise
+
+                    </span>
+
+
+                    <strong>
+
+                        55%
+
+                    </strong>
+
+
+
+                </div>
+
+
+
+
+
+                <div>
+
+
+                    <span>
+
+                        Professional
+
+                    </span>
+
+
+                    <strong>
+
+                        35%
+
+                    </strong>
+
+
+
+                </div>
+
+
+
+
+
+                <div>
+
+
+                    <span>
+
+                        Starter
+
+                    </span>
+
+
+                    <strong>
+
+                        10%
+
+                    </strong>
+
+
+
+                </div>
+
+
+
+            </div>
+
+
+
+
+
+
+        </article>
+
+
+
+
+
+
+
+
+
+        <article class="bloque-financiero">
+
+
+            <header>
+
+
+                <h3
+                    data-es="Estado financiero"
+                    data-en="Financial Status">
+
+
+                    Estado financiero
+
+
+                </h3>
+
+
+            </header>
+
+
+
+
+
+
+
+            <ul class="lista-financiera">
+
+
+                <li>
+
+                    Facturación automática activa
+
+                </li>
+
+
+
+                <li>
+
+                    Pagos procesados correctamente
+
+                </li>
+
+
+
+                <li>
+
+                    Renovaciones pendientes: 12
+
+                </li>
+
+
+
+            </ul>
+
+
+
+
+
+        </article>
+
+
+
+
+
+
+
+    </div>
+
+
+
+
+
+
+
+
+
+    <!-- =================================
+         PROYECCIÓN IA
+         ================================= -->
+
+
+    <div class="panel-operaciones">
+
+
+
+
+
+
+        <article class="bloque-operacion">
+
+
+            <h3
+                data-es="Proyección financiera IA"
+                data-en="AI Financial Forecast">
+
+
+                Proyección financiera IA
+
+
+            </h3>
+
+
+
+
+
+            <p>
+
+                El modelo predictivo estima un crecimiento del 24% para los próximos seis meses.
+
+            </p>
+
+
+
+        </article>
+
+
+
+
+
+
+
+
+
+        <article class="bloque-operacion">
+
+
+            <h3
+                data-es="Recomendación estratégica"
+                data-en="Strategic Recommendation">
+
+
+                Recomendación estratégica
+
+
+            </h3>
+
+
+
+
+            <p>
+
+                Aumentar la inversión en soluciones Enterprise debido a la alta demanda empresarial.
+
+            </p>
+
+
+
+        </article>
+
+
+
+
+
+
+    </div>
+
+</section>
+
+
+<!-- =========================================
+     CONFIGURACIÓN DEL SISTEMA
+     ========================================= -->
+
+
+<section
+    id="vista-configuracion"
+    class="modulo">
+
+
+
+
+
+    <header class="cabecera-modulo">
+
+
+        <div>
+
+
+            <h1
+                data-es="Configuración del Sistema"
+                data-en="System Configuration">
+
+
+                Configuración del Sistema
+
+
+            </h1>
+
+
+
+
+            <p
+                data-es="Administra preferencias, seguridad e integraciones de la plataforma."
+                data-en="Manage platform preferences, security and integrations.">
+
+
+                Administra preferencias, seguridad e integraciones de la plataforma.
+
+
+            </p>
+
+
+
+        </div>
+
+
+
+    </header>
+
+
+
+
+
+
+
+
+
+    <!-- =================================
+         PERFIL DEL USUARIO
+         ================================= -->
+
+
+    <div class="panel-configuracion">
+
+
+
+
+
+
+        <article class="configuracion-card">
+
+
+            <header>
+
+
+                <div class="icono-configuracion">
+
+
+                    <i class="fa-solid fa-user"></i>
+
+
+                </div>
+
+
+
+                <h3
+                    data-es="Perfil del usuario"
+                    data-en="User Profile">
+
+
+                    Perfil del usuario
+
+
+                </h3>
+
+
+            </header>
+
+
+
+
+
+
+
+            <div class="datos-configuracion">
+
+
+
+                <p>
+
+
+                    <strong>
+
+                        Nombre:
+
+                    </strong>
+
+
+                    <span id="config-nombre-usuario">
+                        Administrador GlobalTech
+                    </span>
+
+
+                </p>
+
+
+
+
+
+                <p>
+
+
+                    <strong>
+
+                        Rol:
+
+                    </strong>
+
+
+                    Director de Operaciones
+
+
+                </p>
+
+
+
+
+
+                <p>
+
+
+                    <strong>
+
+                        Plan:
+
+                    </strong>
+
+
+                    <span id="config-plan-usuario">
+                        Enterprise
+                    </span>
+
+
+                </p>
+
+
+
+
+            </div>
+
+
+
+
+
+
+            <button class="accion-secundaria">
+
+
+                Editar perfil
+
+
+            </button>
+
+
+
+
+        </article>
+
+
+
+
+
+
+
+
+
+    <!-- =================================
+         PREFERENCIAS
+         ================================= -->
+
+
+
+
+
+        <article class="configuracion-card">
+
+
+            <header>
+
+
+                <div class="icono-configuracion">
+
+
+                    <i class="fa-solid fa-sliders"></i>
+
+
+                </div>
+
+
+
+                <h3
+                    data-es="Preferencias"
+                    data-en="Preferences">
+
+
+                    Preferencias
+
+
+                </h3>
+
+
+            </header>
+
+            <div class="opciones-configuracion">
+
+                <div class="opcion">
+
+
+                    <span
+                        data-es="Idioma del sistema"
+                        data-en="System language">
+
+
+                        Idioma del sistema
+
+                    </span>
+
+
+
+                    <strong>
+
+                        Español
+                        
+                    </strong>
+
+
+                </div>
+
+
+
+
+
+
+
+                <div class="opcion">
+
+
+                    <span
+                        data-es="Zona horaria"
+                        data-en="Time zone">
+
+
+                        Zona horaria
+
+
+                    </span>
+
+
+
+                    <strong>
+
+                        GMT-5
+
+                    </strong>
+
+
+                </div>
+
+
+
+
+
+
+
+                <div class="opcion">
+
+
+                    <span
+                        data-es="Modo interfaz"
+                        data-en="Interface mode">
+
+
+                        Modo interfaz
+
+
+                    </span>
+
+
+
+                    <strong>
+
+                        Profesional
+
+                    </strong>
+
+
+                </div>
+
+
+
+
+
+            </div>
+
+
+
+
+
+        </article>
+
+
+
+
+
+
+
+
+
+    <!-- =================================
+         SEGURIDAD
+         ================================= -->
+
+
+
+
+
+        <article class="configuracion-card">
+
+
+            <header>
+
+
+                <div class="icono-configuracion">
+
+
+                    <i class="fa-solid fa-shield-halved"></i>
+
+
+                </div>
+
+
+
+                <h3
+                    data-es="Seguridad"
+                    data-en="Security">
+
+
+                    Seguridad
+
+
+                </h3>
+
+
+            </header>
+
+
+
+
+
+
+
+            <div class="opciones-configuracion">
+
+
+
+
+
+                <div class="opcion">
+
+
+                    <span>
+
+                        Autenticación MFA
+
+                    </span>
+
+
+
+                    <strong>
+
+                        Activada
+
+                    </strong>
+
+
+                </div>
+
+
+
+
+
+
+                <div class="opcion">
+
+
+                    <span>
+
+                        Último acceso
+
+                    </span>
+
+
+
+                    <strong>
+
+                        Hace 5 minutos
+
+                    </strong>
+
+
+                </div>
+
+
+
+
+
+
+
+                <div class="opcion">
+
+
+                    <span>
+
+                        Nivel protección
+
+                    </span>
+
+
+
+                    <strong>
+
+                        Alto
+
+                    </strong>
+
+
+                </div>
+
+
+
+
+            </div>
+
+
+
+
+
+        </article>
+
+
+
+
+
+
+
+    </div>
+
+
+
+
+
+
+
+
+
+    <!-- =================================
+         CONFIGURACIÓN IA
+         ================================= -->
+
+
+    <div class="panel-operaciones">
+
+
+
+
+
+        <article class="bloque-operacion">
+
+
+            <h3
+                data-es="Configuración de modelos IA"
+                data-en="AI Model Configuration">
+
+
+                Configuración de modelos IA
+
+
+            </h3>
+
+
+
+
+
+            <ul class="lista-actividad">
+
+
+                <li>
+
+                    Modelo principal: GT Neural Core
+
+                </li>
+
+
+
+                <li>
+
+                    Aprendizaje automático: Activado
+
+                </li>
+
+
+
+                <li>
+
+                    Actualizaciones automáticas: Activadas
+
+                </li>
+
+
+
+            </ul>
+
+
+
+
+        </article>
+
+
+
+
+
+
+
+
+
+        <article class="bloque-operacion">
+
+
+            <h3
+                data-es="Integraciones externas"
+                data-en="External Integrations">
+
+
+                Integraciones externas
+
+
+            </h3>
+
+
+
+
+
+            <ul class="lista-actividad">
+
+
+                <li>
+
+                    API empresarial conectada
+
+                </li>
+
+
+
+                <li>
+
+                    Servicios Cloud sincronizados
+
+                </li>
+
+
+
+                <li>
+
+                    Base de datos operativa
+
+                </li>
+
+
+
+            </ul>
+
+
+
+        </article>
+
+
+
+
+
+    </div>
+
+</section>
+
+    </main>
+
+</div>
+<script src="js/main.js"></script>
+
+
 </body>
+
 </html>
+
